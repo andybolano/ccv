@@ -1,0 +1,214 @@
+ <div ng-controller="ESareaController" class="contenedor"> 
+     <div class="row white">
+         <div class="col s12 z-depth-1">
+             <div class="contenedor">
+                 <div class="row">
+                     <div class="col s12">
+                         <h2>Informe de E/S por areas</h2>  
+                     </div>
+                   <div class="col s3 left">           
+                             <label>Seleccione Area :</label>
+                             <select ng-model="Areas.seleccionada" class="browser-default" name="listaArea" id="listaArea" ng-change="getJefe();getEmpleados();" required>
+                                    <option value="{{area.id}}" ng-repeat="area in Areas" >{{area.nombre}}</option>
+			     </select> 
+                     </div>
+                     <div class="col s3 left">
+                         <small>Jefe de Area</small></br>
+                           <div class="chip">
+                           <img src="{{imagenJefe}}" alt="Contact Person" class="profile"/>
+                           {{nombreJefe}}
+                          </div>
+                     </div>
+                      <div class="col s3 left" style="padding-right:50px;">
+                          <div>
+                             <small>Fecha</small>
+                           </div>
+                          <input type="date" id="fechaConsulta" ng-model="fechaConsulta" ng-change="getEmpleados();"  required />
+                     </div>
+                     <div class="col s3">
+                        
+                         <div style='width:32px;float: left'>
+                          <i class="material-icons left">search</i>
+                         </div>
+                           <div style='float: left'>
+                         <small>Buscador</small>
+                          </div>
+                         <input id="search" type="text" placeholder="Item" ng-model="filtro" required>
+                        
+                     </div>
+                 </div>   
+                 <div class="row">
+                     <div class="col s12">
+                        <table class="bordered striped">
+                            <thead> 
+                            <tr>
+                                <th width='32px'></th>
+                                <th>N° de Documento</th>
+                                <th>Nombres</th>
+                                <th>Cargo</th>
+                                <th>Entrada Jornada 1</th>
+                                <th>Salida Jornada 1</th>
+                                <th>Entrada Jornada 2</th>
+                                <th>Salida Jornada 2</th>
+                            </tr>
+                            </thead>
+                             <tbody id="ES" style="height:100px;overflow-y: auto;">
+                                
+                            </tbody>
+                        </table>
+                          <div id="loading" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
+                     </div>
+                   </div>
+                 </div>
+             </div>
+         </div>
+          <div class="fixed-action-btn" style="bottom: 60px; right: 40px;">
+             <a class="btn-floating btn-large waves-effect waves-light red" onclick="imprimir();"><i class="material-icons">local_printshop</i></a>
+          </div>
+     
+     <!-----------------------------------------IMPRESION----------------------------------------------->
+     <div id="impresion" style="display:none">
+                     <div style="width:100%">
+                         <img src="../images/logoCompleto.png" width="200px" style="float: left">
+                         <div style="margin-left:380px"><h2>Informe de E/S por areas</h2></div> 
+                     </div>
+         </br></br>
+         <table border="0" width="50%" style="font-size: 11px;"> 
+           <tr style="padding:5px;">
+                 <td width="40%">Reporte del dia:</td>
+                 <td>{{fechaConsulta}}</td>
+             </tr>
+             <tr style="padding:5px;">
+                 <td>Area:</td>
+                 <td>{{nombreArea}}</td>
+             </tr>
+             <tr style="padding:5px;">
+                 <td>Jefe de Area:</td>  
+                 <td>{{nombreJefe}}</td>
+             </tr>
+         </table>  
+         </br>
+         </br>
+                        <table width="100%" style="font-size:11px;">
+                            <thead> 
+                            <tr>
+                                <th>N° de Documento</th>
+                                <th>Nombres</th>
+                                <th>Cargo</th>
+                                <th>Entrada Jornada 1</th>
+                                <th>Salida Jornada 1</th>
+                                <th>Entrada Jornada 2</th>
+                                <th>Salida Jornada 2</th>
+                            </tr>
+                            </thead>
+                             <tbody id="ESimpresa">
+                                
+                            </tbody>
+                        </table>
+         </div>
+     <!----------------------------------------------------------------------------------------->
+     <script>
+         function imprimir () {
+        /*$('#impresion').printElement(
+        {
+            leaveOpen:false,
+            printMode:'popup'
+        });*/
+        var data = jQuery('#impresion').html();
+                var mywindow = window.open('', 'Rerportes de entradas y salidas');
+                mywindow.document.write('<html><head><title>Reporte de entradas y salidas</title>');
+                mywindow.document.write(' <link href="../css/impresion.css" rel="stylesheet" type="text/css" media="print"/>');
+                mywindow.document.write(data);
+                mywindow.document.write('</body></html>');
+                setTimeout(function(){
+                    mywindow.print();
+                    
+                    mywindow.close();
+                                
+                                
+                    location.reload();
+                }, 250);
+                
+    } 
+    </script>
+    
+      <div id="modalFuncionarioDetalles" class="modal modal-fixed-footer" style="width: 90%;min-height:85%;">
+            <div class="modal-content">
+                <h2>{{title}}</h2>
+                    <div class="row">
+                        <div class="col s2">
+                              <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big '>
+                            
+                            <div style="margin-top:-10px">
+                            <p>C.C {{empleado.noDocumento}}</p>
+                            <p style="font-weight:900;margin-top:-16px;">{{empleado.nombres}} {{empleado.apellidos}}</p>
+                            <p style="margin-top:-16px;">{{empleado.nombre}}</p>
+                            </div>
+                            <h2><i class="material-icons left" style="color:#ff1744;">favorite</i>{{puntajeTotal}}</h2>
+                        </div>
+                         <div class="col s4 z-depth-1">
+                                <div class="row">
+                                <div class="col s2">
+                                    <h2>E/S</h2>
+                                </div>
+                                    <div class="col s5">
+                                          <div>
+                                        <small>Por Dia:</small>
+                                         </div>
+                                        <input type="date" id="fechaConsulta" name="input" ng-model="fechaConsulta.value" ng-change="getEntradaSalida(empleado.id)"  required />
+                                    </div>
+                                    <div class="col s5">
+                                          <div>
+                                        <small>Por Mes:</small>
+                                         </div>
+                                           <select ng-model="fecha" class="browser-default" name="mes" id="mes" ng-change="getPorMes()" required>
+                                            <option value="{{mes.id}}" ng-repeat="mes in Meses" > {{mes.nombre}}</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                        <table class="bordered striped ">
+                            <thead> 
+                            <tr>
+                                <th>fecha</th>
+                                <th>Jornada</th>
+                                <th>Hora llegada</th>
+                                <th>Retraso</th>
+                                <th>Puntaje</th>   
+                            </tr>
+                            </thead>
+                            <tbody id="ES" style="height:100px;overflow-y: auto;">
+                                
+                            </tbody>
+                        </table>
+                             </br>
+                     </div>
+                        <div class="col s5 z-depth-1" style="margin-left:10px;">
+                             <div class="row">
+                                <div class="col s3">
+                                    <h2>Permisos</h2>
+                                </div>
+                                    <div class="col s4">
+                                          <div>
+                                        <small>Por Dia:</small>
+                                         </div>
+                                        <input type="date" id="fechaConsulta" name="input" ng-model="fechaConsulta.value" ng-change="getEntradaSalida(empleado.id)"  required />
+                                    </div>
+                                    <div class="col s5">
+                                          <div>
+                                        <small>Por Mes:</small>
+                                         </div>
+                                           <select ng-model="fecha" class="browser-default" name="mes" id="mes" ng-change="getPorMes()" required>
+                                            <option value="{{mes.id}}" ng-repeat="mes in Meses" > {{mes.nombre}}</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+            </div>
+        </div>
+     
+     
+     </div>

@@ -1,0 +1,122 @@
+ <div ng-controller="configuracionController" class="contenedor" > 
+     <div class="row white">
+         <div class="col s12 z-depth-1" id="contenedor">
+             <div class="contenedor">
+                 <div class="row">
+                     <div class='s12'><h2>Configuracion Horaria</h2></div>
+                     <div class="row">
+                         <div class="col s12">
+
+                                <table class="striped bordered">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Nombre</th>   
+                                    <th>Hora Entrada</th>
+                                    <th>Hora Salida</th>
+                                    <th>Editar</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in Horarios">
+                                            <td>{{item.id}}</td>
+                                            <td>{{item.nombre}}</td>
+                                            <td>{{item.tipoHorario}}</td>
+                                            <td>{{item.horaInicio}}</td>
+                                            <td>{{item.horaFinal}}</td>
+                                            <td><i class="material-icons" style="color:#8bc34a" ng-click="editar(item)">edit</i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                         </div>
+                      </div>
+                 </div>
+             </div>
+         </div>
+     
+          <div id="modalHorario" class="modal modal-fixed-footer">
+            
+            <div class="modal-content">
+                <h2>{{title}}</h2>
+                <div class="row">
+                    
+                    <div class="col s8">
+                        
+                        <form class="col s12">
+                        <div class="row">
+                            <div class="col s12">
+                                <label>Código</label>
+                                <input ng-model="horario.id" disabled id="codigo" type="text" class="validate">
+                                
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                 <label>Nombre</label>
+                                <input ng-model="horario.nombre" id="descripcion" type="text" class="validate">
+                               
+                            </div>
+                            
+                        </div>
+        <div class="row">
+                            <div class="col s12">
+                                 <label>Mensaje</label>
+                                <input ng-model="horario.mesaje" id="descripcion" type="text" class="validate">
+                               
+                            </div>
+                            
+                        </div>
+                            <div class="row">
+                     <div class="col s6">
+                        
+                         <div style='width:32px;float: left'>
+                          <i class="material-icons left">alarm_on</i>
+                         </div>
+                           <div style='float: left'>
+                         <small>Hora de entrada</small>
+                          </div>
+                         <input type="text" ng-model="horario.horaInicio" id="horaEntrada"  value="00:00:00" required>
+                        
+                     </div>
+                                
+                                <div class="col s6">
+                        
+                         <div style='width:32px;float: left'>
+                          <i class="material-icons left">alarm_off</i>
+                         </div>
+                           <div style='float: left'>
+                         <small>Hora de Salida</small>
+                          </div>
+                         <input type="text" ng-model="horario.horaFinal" id="horaSalida"  value="00:00:00" required>
+                        
+                     </div>
+                            
+                        </div>
+                    </form>
+                        
+                    </div>                   
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red  " style="margin-left:10px">Salir</a>
+                <a href="javascript:;" class="waves-effect waves-light btn green" ng-show="editMode" ng-click="modificar()">Modificar</a>
+            </div>
+            
+        </div>
+     
+     
+     </div>
+
+
+<script>
+$(document).ready(function(){
+    $('ul.tabs').tabs();
+        var windowheight = $(window).height();
+        var tamNav = $("#nav").height();
+        var tam = windowheight - (tamNav+60);
+       
+       document.getElementById('contenedor').style.height = tam + "px";
+    
+  });
+</script>    

@@ -1,0 +1,114 @@
+ <div ng-controller="permisosController" class="contenedor"> 
+     <div class="row white">
+         <div class="col s12 z-depth-1">
+             <div class="contenedor">
+                 <div class="row">
+                     <div class="col s12">
+                         <h2>Registro de Permiso</h2>  
+                     </div>
+                     </br>
+                 <div class="row">
+                      <div class="col s2">
+                            <label for="first_name">N° de Identificacion</label>
+                            <input  id="cedula" type="text" class="validate" ng-model="identificacion" ng-blur="consultarFuncionario();">
+                      </div>
+                      <div class="col s4">
+                            <small>Funcionario</small></br>
+                                <div class="chip">
+                                <img src="{{imagenFuncionario}}" alt="Contact Person" class="profile"/>
+                                {{funcionario.nombres}}  {{funcionario.apellidos}}
+                               </div>
+                      </div>
+                     <div class="col s3">
+                         <label for="first_name">Area</label></br>
+                            {{funcionario.area}}
+                      </div>
+                     <div class="col s3">
+                         <label for="first_name">Cargo</label></br>
+                            {{funcionario.cargo}}
+                      </div>
+                   </div>
+                     <div class="row">
+                         <div class="col s3" >
+                          <div>
+                             <small>Fecha del Permiso Solicitado Desde el dia:</small>
+                           </div>
+                          <input type="date" id="fechaInicio"ng-model="Permiso.fechaInicio" required />
+                     </div>
+                         <div class="col s2" >
+                          <div>
+                             <small>Hora salida:</small>
+                           </div>
+                          <input type="time" id="HoraSalida" value="00:00" ng-model="Permiso.horaSalida" placeholder="HH:mm"  required />
+                     </div>
+                         
+                          <div class="col s3">
+                          <div>
+                             <small>Hasta el dia:</small>
+                           </div>
+                          <input type="date" id="fechaFin" ng-model="Permiso.fechaFin"  required />
+                     </div>
+                         <div class="col s2" >
+                          <div>
+                             <small>Hora retorno:</small>
+                           </div>
+                          <input type="time" id="HoraRetorno" value="00:00" placeholder="HH:mm"  ng-model="Permiso.horaEntrada"  required />
+                     </div>
+                     </div>
+                     <div class="row">
+                          <div class="col s12">
+                         <label>Motivo del Permiso:</label>
+                            <div class="row">
+                                <form name="frmtipoPermiso">
+                                <p ng-repeat="item in Permisos" class="col s3">
+                                    <input name="permisos"  type="radio" id="{{item.id}}" ng-model="Permiso.tipo"/>
+                                   <label for="{{item.id}}">{{item.nombre}}</label>
+                                </p>
+                                </form>
+                            </div>
+                          </div>
+                      <div class="col s4">
+                      <label for="textarea1">Otro motivo:</label>
+                        <textarea id="textarea1" style="margin-left:6px;" ng-model="Permiso.otroMotivo"></textarea>                
+                          </div>
+                         <div class="col s2">
+                             <label>Permiso Renumerado:</label>
+                                 
+                        <form name="frmremunerado">      
+                            <p>
+                        <input name="remuneracion" ng-model="Permiso.remunerado" type="radio" id="SI" checked="false" />
+                        <label for="SI">SI</label>
+                      </p>
+                      <p>
+                        <input name="remuneracion" ng-model="Permiso.remunerado" type="radio" id="NO"  checked="checked"/>
+                        <label for="NO">NO</label>
+                      </p>   
+                        </form>
+                          </div>
+                
+                     
+                         <div  class="col s3">
+                             <p>
+                                <input type="checkbox" id="vistoJefe" ng-model="Permiso.vistoJefe" />
+                                <label for="vistoJefe">Visto Bueno por jefe de area</label>
+                              </p>
+                              <p>
+                                <input type="checkbox" id="vistoAutoriza"  ng-model="Permiso.vistoAutoriza"/>
+                                <label for="vistoAutoriza">Visto Bueno de quien autoriza</label>
+                              </p>
+                         </div>
+                         <div class="col s3">
+                             </br>
+                             <a class="waves-effect waves-light btn-large green left" ng-click="nuevo();"><i class="material-icons left">cloud_upload</i>REGISTRAR</a>
+                         </div>
+                 </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+     
+      
+     
+     
+     </div>
+

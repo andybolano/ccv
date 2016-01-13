@@ -1,0 +1,286 @@
+<div ng-controller="homeController" class="contenedor"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor">
+                <div class="row">
+                    <div class='s12'>     <h2>Bienvenido</h2></div>
+                    <div class="col s6">  
+                        <div class="row">
+                            <div class="col s8">
+                                <small>Funcionario Registrados<span class="new badge">{{numFuncionarios}}</span></small>
+                                <div id="loading" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
+                            </div>
+                            <div class="col s4">
+                                <input id="text" type="text" placeholder="Filtro" ng-model="filtro" style="height:20px !important;font-size:12px !important;" required>
+                            </div>
+                        </div>
+                        <div  style="height:300px;overflow-y:auto ">
+                            <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in Funcionarios| filter: filtro">
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td>{{item.nombres}} {{item.apellidos}}</td>
+                                    <td>{{item.cargo}}</td>
+                                    <td><a href="javascript:;" ng-click="showEmpleandoIndividual(item)"><i class="material-icons left" style="font-size:13px">visibility</i></a></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="col s3">                  
+                        <small>Nuevas solicitudes de permisos<span class="new badge">0</span></small>
+                        <table>
+                            <tr ng-repeat="">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col s3">  
+                        <small>Reportes de ausencia<span class="new badge orange">0</span></small>
+                        <table>
+                            <tr ng-repeat="">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class='white col s6 z-depth-1' style="width:49%">
+            <h5>Top cumplidos</h5><small>llegadas mas puntuales</small><span class="new badge blue">0</span>
+        </div>
+        <div class='white col s6 z-depth-1' style="width:49%;margin-left:2%;">
+            <h5>Top incumplidos</h5><small>llegadas menos puntuales</small><span class="new badge red">0</span>
+        </div>
+    </div>
+
+    <div id="modalFuncionarioDetalles" class="modal modal-fixed-footer" style="width: 90%;min-height:85%;">
+        <div class="modal-content">
+            <h2>{{title}}</h2>
+            <div class="row">
+                <div class="col s2">
+                    <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big '>
+
+                    <div style="margin-top:-10px">
+                        <p>C.C {{empleado.noDocumento}}</p>
+                        <p style="font-weight:900;margin-top:-16px;">{{empleado.nombres}} {{empleado.apellidos}}</p>
+                        <p style="margin-top:-16px;">{{empleado.nombre}}</p>
+                    </div>
+                    <h2><i class="material-icons left" style="color:#ff1744;">favorite</i>{{puntajeTotal}}</h2>
+                </div>
+                <div class="col s10 z-depth-1">
+                    <div class="row">
+                        <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s6"><a class="active" href="#es">ENTRADAS Y SALIDAS</a></li>
+                            <li class="tab col s6"><a href="#permisos">REPORTE DE PERMISOS</a></li>
+                        </ul>
+                        </div> 
+                    </div>
+                    </br>
+                    <div class="row" id="es">
+                        <div class="col s2">
+                            <h2>E/S</h2>
+                        </div>
+                     
+                        <div class="col s5">
+                            <div>
+                                <small>Por Mes:</small>
+                            </div>
+                            <select ng-model="mesConsulta" class="browser-default" name="mes" id="mes" ng-change="getPorMes(empleado.id)" required>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select> 
+                        </div>
+                           <div class="col s5">
+                            <div>
+                                <small>Por Dia:</small>
+                            </div>
+                            <input type="date" id="fechaConsulta" name="input" ng-model="fechaConsulta" ng-change="getEntradaSalida(empleado.id)"  required />
+                        </div>
+                    <div class="row">
+                        <div class="col s12" id="tablaDia">
+                            </br>
+                            <center><h2>E/S DEL DIA</h2></center>
+                            <table class="bordered striped " width="100%">
+                                <thead> 
+                                    <tr>
+                                        <th>Jornada</th>
+                                        <th>Hora</th>
+                                        <th>Retraso</th>
+                                        <th>Puntaje</th>   
+                                    </tr>
+                                </thead>
+                                <tbody id="ES" style="height:100px;overflow-y: auto;">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col s12" id="tablaMes">
+                             </br>
+                            <center><h2>E/S DEL MES</h2></center>
+                            <table class="bordered striped">
+                                <thead> 
+                                    <tr>
+                                        <th>fecha</th>
+                                        <th>Entrada Jor. 1</th>
+                                        <th>Salida Jor. 1</th>
+                                        <th>Entrada Jor. 2</th>
+                                        <th>Salida Jor. 2</th>   
+                                    </tr>
+                                </thead>    
+                                <tbody id="ESmes" style="height:100px;overflow-y: auto;">
+
+                                </tbody>
+                            </table>
+                                                         <div id="loading_1" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
+                                                  <div class="fixed-action-btn" style="bottom: 150px; left: 70px;">
+             <a class="btn-floating btn-large waves-effect waves-light red" onclick="imprimir();"><i class="material-icons">local_printshop</i></a>
+          </div>
+                        </div>
+
+                    </div>
+              </div>
+                
+            
+            
+            
+            <div class="row" id="permisos">
+                    <div class="col s12">
+                
+
+                            <div class="col s12">
+                                <center><h2>Historial de Permisos</h2></center>
+                            </div>
+                      
+                        <table class="bordered striped ">
+                            <thead> 
+                                <tr>
+                                    <th>fecha Entrada</th>
+                                    <th>fecha Salida</th>
+                                    <th>Tipo Permiso</th>
+                                    <th>Remuneracion</th>
+                                    <th>estado</th>   
+                                </tr>
+                            </thead>
+                            <tbody style="height:100px;overflow-y: auto;">
+                                <tr ng-repeat="item in Permisos| filter: filtro" page-size="20" tolerance="100" >
+    
+    
+                                    <td>{{item.fechaSalida}}</td>
+    
+                                    <td>{{item.fechaEntrada}}</td>
+    
+                                    <td>{{item.nombrePermiso}}</td>
+    
+                                    <td>{{item.remuneracion}}</td>
+    
+                                    <td>{{item.estado}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="loading_2" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            <!-----------------------------------------IMPRESION----------------------------------------------->
+     <div id="impresion" style="display:none">
+                     <div style="width:100%">
+                         <img src="../images/logoCompleto.png" width="200px" style="float: left">
+                         <div style="margin-left:340px"><h2>Informe de E/S de funcionario</h2></div> 
+                     </div>
+         </br></br>
+         <table border="0" width="50%" style="font-size: 11px;"> 
+           <tr style="padding:5px;">
+                 <td width="40%">Reporte del Mes:</td>
+                 <td>{{mesConsulta}}</td>
+             </tr>
+             <tr style="padding:5px;">
+                 <td><h2>Funcionario</h2></td><td></td> 
+             </tr>   
+             <tr style="padding:5px;">
+                 <td>C.C </td><td>{{empleado.noDocumento}}</td>
+             </tr>
+             <tr style="padding:5px;">
+                 <td>Nombres:</td><td>{{empleado.nombres}} {{empleado.apellidos}}</td>
+             </tr>
+         </table>  
+         </br>
+         </br>
+                        <table width="100%" style="font-size:11px;">
+                            <thead> 
+                            <tr>
+                                      <th>fecha</th>
+                                        <th>Entrada Jor. 1</th>
+                                        <th>Salida Jor. 1</th>
+                                        <th>Entrada Jor. 2</th>
+                                        <th>Salida Jor. 2</th>     
+                                </tr>
+                            </thead>
+                             <tbody id="ESimpresa">
+                                
+                            </tbody>
+                        </table>
+         </div>
+     <!----------------------------------------------------------------------------------------->
+            
+            
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+        </div>
+    </div>
+
+
+
+</div>
+<script>
+            $(document).ready(function() {
+        $('ul.tabs').tabs();
+
+        /* var scope = angular.element($('#pedidosController')).scope();
+         scope.loadPedidos();*/
+
+    });
+
+         function imprimir () {
+        /*$('#impresion').printElement(
+        {
+            leaveOpen:false,
+            printMode:'popup'
+        });*/
+        var data = jQuery('#impresion').html();
+                var mywindow = window.open('', 'Rerportes de entradas y salidas');
+                mywindow.document.write('<html><head><title>Reporte de entradas y salidas</title>');
+                mywindow.document.write(' <link href="../css/impresion.css" rel="stylesheet" type="text/css" media="print"/>');
+                mywindow.document.write(data);
+                mywindow.document.write('</body></html>');
+                setTimeout(function(){
+                    mywindow.print();
+                    
+                    mywindow.close();
+                                
+                                
+                    location.reload();
+                }, 250);
+                
+    } 
+    </script>
