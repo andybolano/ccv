@@ -53,9 +53,9 @@
                                     <td>{{item.otroMotivo}}</td>
                                     <td>{{item.remuneracion}}</td>
                                     <td ng-if="item.vistoJefe =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
-                                    <td ng-if="item.vistoJefe =='undefined'"><i class="material-icons" style="color:#F44336;">clear</i></td>
-                                    <td ng-if="item.vistoAutoriza =='true'"><i class="material-icons" style="color:#558B2F;">done</i></td>
-                                    <td ng-if="item.vistoAutoriza =='1'"><i class="material-icons" style="color:#F44336;">clear</i></td>
+                                    <td ng-if="item.vistoJefe =='0'"><i class="material-icons" style="color:#F44336;">clear</i></td>
+                                    <td ng-if="item.vistoAutoriza =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
+                                    <td ng-if="item.vistoAutoriza =='0'"><button class="waves-effect waves-light btn-improvised" ng-click="actualizarPermiso(item.id)"><i class="material-icons center"></i></button></td>
                                     <td>{{item.estado}}</td>
                                 </tr>
                             </tbody>
@@ -69,84 +69,4 @@
          </div>
      </div>
      
-      <div id="modalFuncionarioDetalles" class="modal modal-fixed-footer" style="width: 90%;min-height:85%;">
-            <div class="modal-content">
-                <h2>{{title}}</h2>
-                    <div class="row">
-                        <div class="col s2">
-                              <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big '>
-                            
-                            <div style="margin-top:-10px">
-                            <p>C.C {{empleado.noDocumento}}</p>
-                            <p style="font-weight:900;margin-top:-16px;">{{empleado.nombres}} {{empleado.apellidos}}</p>
-                            <p style="margin-top:-16px;">{{empleado.nombre}}</p>
-                            </div>
-                            <h2><i class="material-icons left" style="color:#ff1744;">favorite</i>{{puntajeTotal}}</h2>
-                        </div>
-                         <div class="col s5 z-depth-1">
-                                <div class="row">
-                                <div class="col s2">
-                                    <h2>E/S</h2>
-                                </div>
-                                    <div class="col s5">
-                                          <div>
-                                        <small>Por Dia:</small>
-                                         </div>
-                                        <input type="date" id="fechaConsulta" name="input" ng-model="fechaConsulta" ng-change="getEntradaSalida(empleado.id)"  required />
-                                    </div>
-                                    <div class="col s5">
-                                          <div>
-                                        <small>Por Mes:</small>
-                                         </div>
-                                           <select ng-model="fecha" class="browser-default" name="mes" id="mes" ng-change="getPorMes()" required>
-                                            <option value="{{mes.id}}" ng-repeat="mes in Meses" > {{mes.nombre}}</option>
-                                        </select> 
-                                    </div>
-                                </div>
-                        <table class="bordered striped ">
-                            <thead> 
-                            <tr>
-                                <th>fecha</th>
-                                <th>Jornada</th>
-                                <th>Hora llegada</th>
-                                <th>Retraso</th>
-                                <th>Puntaje</th>   
-                            </tr>
-                            </thead>
-                            <tbody id="ES" style="height:100px;overflow-y: auto;">
-                                
-                            </tbody>
-                        </table>
-                             </br>
-                     </div>
-                        <div class="z-depth-1" style="width:41%; margin-left: 0.6666%; float:left">
-                             <div class="row">
-                                <div class="col s3">
-                                    <h2>Permisos</h2>
-                                </div>
-                                    <div class="col s4">
-                                          <div>
-                                        <small>Por Dia:</small>
-                                         </div>
-                                        <input type="date" id="fechaConsulta" name="input" ng-model="fechaConsultaPermiso.value" ng-change="getEntradaSalida(empleado.id)"  required />
-                                    </div>
-                                    <div class="col s5">
-                                          <div>
-                                        <small>Por Mes:</small>
-                                         </div>
-                                           <select ng-model="fecha" class="browser-default" name="mes" id="mes" ng-change="getPorMes()" required>
-                                            <option value="{{mes.id}}" ng-repeat="mes in Meses" > {{mes.nombre}}</option>
-                                        </select> 
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
-            </div>
-        </div>
-     
-     
-     </div>
 

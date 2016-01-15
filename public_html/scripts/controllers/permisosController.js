@@ -9,7 +9,28 @@ $scope.listaPermisos = {};
 $scope.motivos=[];
 
 loadMotivos();
-loadPermisos();  
+loadPermisos();
+
+
+
+$scope.actualizarPermiso = function (id){
+    
+        var object = {
+            id:id,
+            autoriza:"empresa"
+        }
+        
+  var promiseGet = permisosService.update(object); 
+        promiseGet.then(function (pl) {
+           Materialize.toast(pl.data.message,"rounded","5000");
+           loadPermisos();
+        },
+              function (errorPl) {
+                  console.log('falla Cargando Funcionario', errorPl);
+              });
+}
+
+
 function loadMotivos(){
      var promiseGet = permisosService.getAll(); 
         promiseGet.then(function (pl) {
@@ -23,7 +44,6 @@ function loadMotivos(){
 function loadPermisos(){
       var promiseGet = permisosService.listadoPermisos(); 
         promiseGet.then(function (pl) {
-            console.log(pl.data)
            $scope.listaPermisos=pl.data;
           
         },
@@ -46,6 +66,11 @@ $scope.consultarFuncionario = function (){
 $scope.nuevo= function (){
     var tipoPermiso;
     var remuneracion;
+      var minutos;
+       var horas;
+       var h;
+       var m;
+       var hora;
     var ctrl = document.frmtipoPermiso.permisos;
     for(i=0;i<ctrl.length;i++){
         if(ctrl[i].checked){
@@ -67,11 +92,50 @@ $scope.nuevo= function (){
            var fecha = new Date($scope.Permiso.fechaFin);
            var fechaEntrada= fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + fecha.getDate();
   
-           var hora  = new Date($scope.Permiso.horaEntrada);
-           var horaEntrada = hora.getHours() + ":" + hora.getMinutes();
-           
-           var hora  = new Date($scope.Permiso.horaSalida);
-           var horaSalida = hora.getHours() + ":" + hora.getMinutes();
+  
+  
+           hora  = new Date($scope.Permiso.horaEntrada);
+     
+            h = (hora.getHours().toString().length)
+            m = (hora.getMinutes().toString().length)
+
+           if(h == 1){
+              horas = "0"+hora.getHours();
+           }else{
+            horas = hora.getHours();
+           }
+
+           if(m == 1){
+              minutos = "0"+hora.getMinutes();
+           }else{
+            minutos = hora.getMinutes();
+           }
+
+           var horaEntrada = horas +""+minutos;
+
+
+
+
+            hora  = new Date($scope.Permiso.horaSalida);
+     
+            h = (hora.getHours().toString().length)
+            m = (hora.getMinutes().toString().length)
+
+          
+
+           if(h == 1){
+              horas = "0"+hora.getHours();
+           }else{
+            horas = hora.getHours();
+           }
+
+           if(m == 1){
+              minutos = "0"+hora.getMinutes();
+           }else{
+            minutos = hora.getMinutes();
+           }
+
+           var horaSalida = horas +""+minutos;
            
           var object = {
             funcionario: $scope.funcionario.id,
@@ -85,7 +149,7 @@ $scope.nuevo= function (){
             vistoJefe:$scope.Permiso.vistoJefe,
             vistoAutoriza:$scope.Permiso.vistoAutoriza
         }; 
-        
+      
         var promiseGet = permisosService.post(object); 
         promiseGet.then(function (pl) {
            Materialize.toast(pl.data.message, "rounded","5000");

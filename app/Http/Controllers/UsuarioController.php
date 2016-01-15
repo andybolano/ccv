@@ -11,6 +11,8 @@ use App\Usuario;
 
 class UsuarioController extends Controller
 {
+    
+    
      public function autenticar(Request $request){
         try {                                 
           $data = $request->all();

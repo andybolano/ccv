@@ -13,5 +13,10 @@ app.service("permisosService", function ($http) {
         var req = $http.get(uri+'/api/permiso/getAll');
         return req;
     }
+    
+    this.update = function(object){
+        var req = $http.put(uri+'/api/permiso/update', object);
+        return req;
+    }
 });
 
