@@ -1,16 +1,28 @@
-app.controller('homeController', function($scope, empleadoService, horariosService) {
+app.controller('homeController', function($scope, empleadoService, horariosService, permisosService) {
 
 $scope.Funcionarios ="";
 $scope.numFuncionarios;
  $scope.Horarios= [];
+ $scope.nuevasSolitidudes ={};
+ $scope.numNuevasSolicitudes =0;
 loadFuncionarios();
 $scope.mesConsulta;
 loadHorarios();
-
+nuevasSolicitudes();
 var retrasos = new Array();
  /* var fecha = new Date();
   var fechaEnviar =fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate()+1);
   */
+ function nuevasSolicitudes(){
+        var promiseGet = permisosService.getNuevasSolicitudes(); 
+        promiseGet.then(function (pl) {
+            $scope.nuevasSolicitudes = pl.data;
+            $scope.numNuevasSolicitudes = pl.data.length;
+        },
+              function (errorPl) {
+                  console.log('falla Cargando las Areas', errorPl);
+              });
+  }
  
 function loadHorarios(){
       var promiseGet = horariosService.getAll(); 

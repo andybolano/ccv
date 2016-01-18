@@ -27,14 +27,16 @@
 
                     </div>
                     <div class="col s3">                  
-                        <small>Nuevas solicitudes de permisos<span class="new badge">0</span></small>
-                        <table>
-                            <tr ng-repeat="">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                        <small>Nuevas solicitudes de permisos<span class="new badge">{{numNuevasSolicitudes}}</span></small>
+                        <div  style="height:300px;overflow-y:auto;margin-top: 25px; ">
+                            <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in nuevasSolicitudes">
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td>{{item.nombres}} {{item.apellidos}}</td>
+                                    <td><a href="#/listadoSolicitudes"><i class="material-icons left" style="font-size:13px">visibility</i></a></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                     <div class="col s3">  
                         <small>Reportes de ausencia<span class="new badge orange">0</span></small>

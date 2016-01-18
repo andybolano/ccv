@@ -14,6 +14,16 @@ use App\Empleado;
 class EmpleadoController extends Controller
 {
 
+    
+     public function getNuevaEntrada($empleado){
+        
+         
+         return "Entrada Notificada".$empleado."";
+       
+               
+    }
+    
+    
     public function getById($empleado){
         
          $result = DB::select(DB::raw(

@@ -36,21 +36,35 @@ class UsuarioController extends Controller
         }
     }
     public function autenticarMovil(Request $request){
-        try {                                 
+        try {
+            $id=0;
           $data = $request->all();
              $usuario = $data['username'];
              $clave = $data['pass'];
               $user = DB::select(DB::raw(
-                        "Select e.nombres,e.noDocumento,e.apellidos,e.id,cargos.nombre as cargo, areas.nombre as area  from empleados as e 
+                        "Select e.nombres,e.noDocumento,e.apellidos,e.id,cargos.nombre as cargo, areas.id as idArea, areas.nombre as area  from empleados as e 
                         INNER JOIN cargos ON cargos.id = e.Cargos_id  
                         INNER JOIN areas ON areas.id = e.Areas_id
                         INNER JOIN usuarios as u ON u.Empleados_id = e.id
                         WHERE u.correo =  '".$usuario."'  AND u.clave = '".$clave."'"
-                    ));      
+                    ));
+              
+              foreach ($user as $u) {
+                $id =  $u->id;
+              }
+              
+              $jefe = DB::select(DB::raw(
+                      "SELECT * FROM jefes WHERE Empleados_id= $id"
+               ));
+              if (empty($jefe)){
+                  $jefe = false;
+              }else{
+                  $jefe = true;
+              }
            if (empty($user)){
                 return JsonResponse::create(array('message' => "KO", "request" =>json_encode('Datos Incorrectos')), 200);
             }else{     
-                 return JsonResponse::create(array('message' =>"OK", "request" =>json_encode($user)), 200);
+                 return JsonResponse::create(array('message' =>"OK", "request" =>json_encode($user), "jefeArea" => $jefe), 200);
               
             }
         

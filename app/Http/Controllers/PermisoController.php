@@ -31,6 +31,10 @@ class PermisoController extends Controller
                     
              }else if($data['autoriza']=="jefe"){
                     $permiso->vistoJefe = "1"; 
+                    
+                    if($permiso->vistoAutoriza == "1"){
+                        $permiso->estado = "AUTORIZADO";
+                    }
              }
             
              $permiso->save();
@@ -118,8 +122,38 @@ class PermisoController extends Controller
         }
     }
     
-
-   
+ public function getNuevasSolicitudes(){
+         try {
+              $result = DB::select(DB::raw(
+                        "Select s.*, e.nombres, e.apellidos, noDocumento, p.nombre as nombrePermiso from solicitudpermisos as s
+                         INNER JOIN empleados as e ON e.id = s.Empleados_id  
+                         INNER JOIN permisos as p ON p.id = s.TipoPermisos_id 
+                         WHERE s.vistoAutoriza = 0
+                         ORDER BY id DESC
+                        " 
+                    )); 
+              return $result;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+    
+    public function getNuevasSolicitudesByarea($area){
+         try {
+              $result = DB::select(DB::raw(
+                        "SELECT e.nombres,e.apellidos,e.id as idEmpleado, e.noDocumento, s.*,s.id as idSolicitud, p.* FROM solicitudpermisos as s
+                            INNER JOIN empleados as e ON e.id = s.Empleados_id
+                            INNER JOIN areas as a ON a.id =  e.Areas_id
+                            INNER JOIN permisos as p ON p.id = s.TipoPermisos_id
+                            WHERE a.id = $area AND s.estado = 'ESPERANDO'
+                        " 
+                    )); 
+              return $result;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
