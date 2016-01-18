@@ -51,7 +51,7 @@
                                 <tr ng-repeat="item in Empleados| filter: filtro" page-size="20" tolerance="100" >
                                     <td>{{item.id}}</td>
                                     <td>
-                                        <img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile'>
+                                        <img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile animated bounceIn'>
                                     </td>
                                     <td>{{item.noDocumento}}</td>
                                     <td>{{item.nombres}} {{item.apellidos}}</td>
@@ -73,7 +73,7 @@
             <h2>{{title}}</h2>
             <div class="row">
                 <div class="col s2">
-                    <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big '>
+                    <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big animated bounceIn'>
 
                     <div style="margin-top:-10px">
                         <p>C.C {{empleado.noDocumento}}</p>

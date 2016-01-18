@@ -17,7 +17,8 @@ $scope.actualizarPermiso = function (id){
     
         var object = {
             id:id,
-            autoriza:"empresa"
+            autoriza:"empresa",
+            estado:"1"
         }
         
   var promiseGet = permisosService.update(object); 

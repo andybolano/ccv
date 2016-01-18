@@ -53,6 +53,7 @@
                                     <td>{{item.otroMotivo}}</td>
                                     <td>{{item.remuneracion}}</td>
                                     <td ng-if="item.vistoJefe =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
+                                     <td ng-if="item.vistoJefe =='2'"><i class="material-icons" style="color:#F44336;">pan_tool</i></td>
                                     <td ng-if="item.vistoJefe =='0'"><i class="material-icons" style="color:#F44336;">clear</i></td>
                                     <td ng-if="item.vistoAutoriza =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
                                     <td ng-if="item.vistoAutoriza =='0'"><button class="waves-effect waves-light btn-improvised" ng-click="actualizarPermiso(item.id)"><i class="material-icons center"></i></button></td>

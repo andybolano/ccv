@@ -237,7 +237,7 @@ function loadHorarios(){
                }
                
                 item =  "<tr>"+
-                        "<td><img src='"+image+"' alt='Contact Person' class='profile'></td>"+
+                        "<td><img src='"+image+"' alt='Contact Person' class='profile animated bounceIn'></td>"+
                         "<td>"+pl.data[i].noDocumento+"</td>"+
                         "<td>"+pl.data[i].nombres+" "+pl.data[i].apellidos+"</td>"+
                         "<td>"+pl.data[i].cargo+"</td>"+

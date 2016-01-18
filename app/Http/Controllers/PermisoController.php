@@ -20,6 +20,8 @@ class PermisoController extends Controller
  
              $data = $request->all();
              $permiso = Permiso::find($data['id']);
+             
+ 
 
              if($data['autoriza']=="empresa"){
                  
@@ -27,24 +29,53 @@ class PermisoController extends Controller
                     
                     if($permiso->vistoJefe == "1"){
                         $permiso->estado = "AUTORIZADO";
+                    }else if($permiso->vistoJefe == "2"){
+                        $permiso->estado = "DENEGADO";
                     }
                     
-             }else if($data['autoriza']=="jefe"){
-                    $permiso->vistoJefe = "1"; 
-                    
-                    if($permiso->vistoAutoriza == "1"){
-                        $permiso->estado = "AUTORIZADO";
-                    }
              }
+          
             
              $permiso->save();
             
         
             
-        return JsonResponse::create(array('message' => "El permisos Ha sido autorizado", "request" =>json_encode($data)), 200);
+        return JsonResponse::create(array('message' => "El permisos Ha sido actualizado", "request" =>json_encode($data)), 200);
             
         } catch (Exception $exc) {
-            return JsonResponse::create(array('message' => "No se pudo Modificar la marca", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+            return JsonResponse::create(array('message' => "No se pudo actualizar", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
+
+    }
+    
+      public function updatePermisoMovil(Request $request)
+    {
+        try {
+            
+ 
+             $data = $request->all();
+             $permiso = Permiso::find($data['id']);
+             
+                 
+                    $permiso->vistoJefe = $data['estado'];
+                    
+                    if($permiso->vistoAutoriza == "1" && $data['estado'] == "1"){
+                        $permiso->estado = "AUTORIZADO";
+                    }else if($data['estado'] == "2"){
+                         $permiso->estado = "DENEGADO";
+                    }
+                   
+            
+         
+            
+             $permiso->save();
+            
+        
+            
+        return JsonResponse::create(array('message' => "El permisos Ha sido actualizado", "request" =>json_encode($data)), 200);
+            
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo actualizar", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
         }
 
     }
@@ -140,12 +171,14 @@ class PermisoController extends Controller
     
     public function getNuevasSolicitudesByarea($area){
          try {
+             $fecha=date("Y-m-d");
+             
               $result = DB::select(DB::raw(
                         "SELECT e.nombres,e.apellidos,e.id as idEmpleado, e.noDocumento, s.*,s.id as idSolicitud, p.* FROM solicitudpermisos as s
                             INNER JOIN empleados as e ON e.id = s.Empleados_id
                             INNER JOIN areas as a ON a.id =  e.Areas_id
                             INNER JOIN permisos as p ON p.id = s.TipoPermisos_id
-                            WHERE a.id = $area AND s.estado = 'ESPERANDO'
+                            WHERE a.id = $area AND s.fechaEntrada <= '$fecha'
                         " 
                     )); 
               return $result;

@@ -17,7 +17,7 @@
                         <div  style="height:300px;overflow-y:auto ">
                             <table style="font-size: 12px;" class="bordered">
                                 <tr ng-repeat="item in Funcionarios| filter: filtro">
-                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile animated bounceIn' style="width:20px;height: 20px"></td>
                                     <td>{{item.nombres}} {{item.apellidos}}</td>
                                     <td>{{item.cargo}}</td>
                                     <td><a href="javascript:;" ng-click="showEmpleandoIndividual(item)"><i class="material-icons left" style="font-size:13px">visibility</i></a></td>
@@ -67,7 +67,7 @@
             <h2>{{title}}</h2>
             <div class="row">
                 <div class="col s2">
-                    <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big '>
+                    <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big animated bounceIn'>
 
                     <div style="margin-top:-10px">
                         <p>C.C {{empleado.noDocumento}}</p>
