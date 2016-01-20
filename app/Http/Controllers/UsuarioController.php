@@ -19,7 +19,7 @@ class UsuarioController extends Controller
              $usuario = $data['username'];
              $clave = $data['pass'];
               $user = DB::select(DB::raw(
-                        "Select u.*, e.nombres, e.apellidos, e.noDocumento from usuarios as u
+                        "Select u.correo,u.Empleados_id,u.rol,u.estado, e.nombres, e.apellidos, e.noDocumento from usuarios as u
                             INNER JOIN empleados as e ON e.id = u.Empleados_id
                          WHERE u.correo =  '".$usuario."'  AND u.clave = '".$clave."' AND u.rol= 'ADMIN' "
                     ));      

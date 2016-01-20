@@ -18,7 +18,7 @@
                <div class="row blue accent-4" style="margin-top: 5%;">
                    
                    <div class="col s12 animated bounceIn" style="text-align: center;">
-                       <img src="images/logo.png">
+                       <a href="http://www.appccvalledupar.co/"><img src="images/logo.png"></a>
                        
                    </div>
                    <div class="offset-s4 col s4 z-depth-3 white animated bounceInLeft" style="border-radius: 5px;padding: 20px;"> 
@@ -30,7 +30,8 @@
                     
                            </div>
                        </div>
-                    
+                       <form>
+                         <input type="hidden" name="_token" value="{{ csrf_token()}}"/>
                     	<div class="row">                                    
                                     <div class="input-field col s12">
                                         <i class="mdi-action-account-circle prefix"></i>
@@ -52,8 +53,9 @@
                             <div class="col s12 flash" style="text-align: center;">
                                 <button type="submit" ng-click="iniciarSesion()" class="signin-db waves-effect waves-light   btn blue accent-4 fadeInDown"><i class="mdi-hardware-keyboard-arrow-left left"></i>Iniciar Sesion</button>
                             </div>
+                       
                         </div>
-                  
+                  </form>
                 
                    </div>
             </div>
