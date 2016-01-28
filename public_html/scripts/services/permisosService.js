@@ -4,7 +4,6 @@ app.service("permisosService", function ($http) {
         return req;
     };
     this.post = function (object){
-        console.log(object)
          var req = $http.post(uri+'/api/permisos',object);
         return req;
     }
@@ -23,6 +22,10 @@ app.service("permisosService", function ($http) {
         var req = $http.get(uri+'/api/permiso/nuevasSolicitudes');
         return req;
     }
+    
+
+    
+    
     
 });
 

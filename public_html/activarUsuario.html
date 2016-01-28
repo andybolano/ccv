@@ -12,10 +12,13 @@
         <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
          <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
               <link href="css/animate.css" rel="stylesheet">
+              <link href="css/sweetalert.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body>
-        <div ng-controller="loginController">          
-               <div class="row blue accent-4" style="margin-top: 5%;">
+    <body class="blue accent-4">
+        <div ng-controller="activarController"> 
+            
+          
+               <div class="row blue accent-4" style="margin-top: 6%;">
                    
                    <div class="col s12 animated bounceIn" style="text-align: center;">
                        <a href="http://www.appccvalledupar.co/"><img src="images/logo.png"></a>
@@ -24,35 +27,25 @@
                    <div class="offset-s4 col s4 z-depth-2 white animated bounceInLeft" style="border-radius: 5px;padding: 20px;"> 
                        <div class="row">
                            <div class="col s12" style="text-align: center">
-                                <h2 style="font-weight:900">Time It</h2>
-                        <h2 >Iniciar Sesion</h2>
+                        <h2 >Activar usuario</h2>
                            </div>
-                            <div class="col s12" style="text-align: center;color:red;" id="error">
-                    
+                            <div class="col s12">
+                 
+                    <center><img src="./images/loading.gif" width="40px;" style="display: none;" id="loading_2"></center>
                            </div>
                        </div>
                        <form>
-                         <input type="hidden" name="_token" value="{{ csrf_token()}}"/>
-                    	<div class="row">                                    
+                    	<div class="row">  
+                            <label style="margin-left:45px;">Ingrese Nº de Identificacion</label>
                                     <div class="input-field col s12">
                                         <i class="mdi-action-account-circle prefix"></i>
-                                        <input type="text" ng-model="Usuario.user" id="username" name="username" maxlength="30" required min="3">
+                                        <input type="text" ng-model="User.cedula" id="username" name="username" maxlength="30" required min="3">
                                      
                                     </div>
                         </div>
-                        <div class="row"> 
-                                    <div class="input-field col s12">
-                                        <i class="mdi-communication-vpn-key prefix"></i>
-                                        <input type="password" ng-model="Usuario.clave" id="pass" name="pass" maxlength="30" required min="3">
-                                    
-                                    </div>
-                                </div> 
                         <div class="row">
-                            <div class="col s6 flash">
-                                <center> <a href="activarUsuario.html">Activar mi Usuario!</a></center>
-                            </div>
-                            <div class="col s6 flash" style="text-align: center;">
-                                <button type="submit" ng-click="iniciarSesion()" id="btn-inicio"  class="signin-db waves-effect waves-light   btn blue accent-4 fadeInDown"><i class="mdi-hardware-keyboard-arrow-left left"></i>Entrar</button>
+                            <div class="col s12 flash" style="text-align: center;">
+                                <button type="submit" ng-click="activarCuenta()" class="signin-db waves-effect waves-light   btn blue accent-4 fadeInDown" id="btn-activar"><i class="mdi-hardware-keyboard-arrow-left left"></i>Activar</button>
                             </div>
                        
                         </div>
@@ -60,19 +53,25 @@
 
                    </div>
             </div>
+         
         </div>
-
+     <div class="fixed-action-btn animated bounceInLeft" style="bottom: 45px; left: 24px;">
+                <a href="index.html" class="btn-floating btn-large waves-effect waves-light red">
+                    <i class="material-icons">reply</i>
+                </a>
+            </div>
         <!-- jQuery and  -->
 
         <script src="js/jquery/jquery-2.1.1.min.js"></script>
         <script src="js/materialize.js" type="text/javascript"></script>
+        <script src="js/sweetalert.min.js" type="text/javascript"></script>
         <script src="js/angular/angular.js"></script>
         <script src="js/angular/angular-route.js" type="text/javascript"></script>
         <script src="js/angular/ui-utils.min.js" type="text/javascript"></script> 
         <script src="scripts/app.js" type="text/javascript"></script>
 
         <!-- controladores-->
-        <script src="scripts/controllers/loginController.js" type="text/javascript"></script>
+        <script src="scripts/controllers/activarController.js" type="text/javascript"></script>
  
          
          <!--Service--->

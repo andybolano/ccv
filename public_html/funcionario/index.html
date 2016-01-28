@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html ng-app="timeIt">
+<html ng-app="timeIt_funcionario">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Camara De Comercio - Valledupar</title> 
         <link href="../css/materialize.css" rel="stylesheet"/>
         <link href="../css/animate.css" rel="stylesheet">
-       
+        <link href="../css/sweetalert.css" rel="stylesheet" type="text/css"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="../css/style.css" rel="stylesheet"/>
+        <link href="../css/map.css" rel="stylesheet" type="text/css"/>
         <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
          <link rel="icon" href="../../public/favicon.ico" type="image/x-icon">
               <script>
-                    if (sessionStorage.getItem('sessionAdmin')) {
+                    if (sessionStorage.getItem('session')) {
                          
                     }else{
                         window.location.href = "../index.html";
@@ -20,7 +21,8 @@
             </script>
     </head>
     <body>
-        <div ng-controller="indexController" data-ng-init="usuarioAdmin()"> 
+        <div ng-controller="indexController" data-ng-init="usuario()"> 
+ 
             <div class="navbar-fixed" id="nav">    
                 <nav>
                     <div class="nav-wrapper blue accent-4">
@@ -44,48 +46,20 @@
                               <li class="user">
                                 <div style="text-align: left;padding-top: 20px;padding-left: 10px;">
                                     <img alt="image" class="circle" style="border:2px solid #FFFFFF;" src="blob.php?id={{usuario.noDocumento}}" alt="Contact Person" class='profile' width="56px;" height="56px;">                            
-                                   <div style="color:#FFFFFF;margin-top:-15px;font-size:12px;">{{usuario.rol}}</div>
+                                                                      <div style="color:#FFFFFF;margin-top:-25px;font-size:12px;">{{usuario.rol}}</div>
                                     <div style="color:#FFFFFF;font-weight:900;margin-top:-25px;">{{usuario.nombres}} {{usuario.apellidos}}</div>                    
                                    <div style="color:#FFFFFF;margin-top:-25px;font-size:12px;">{{usuario.cargo}}</div>
-                                   
-                                  
+
+                                   <div style="color:#FFFFFF;margin-top:-25px;font-size:14px;"><i class="material-icons">favorite</i>&nbsp;&nbsp;{{puntaje}} pts</div>
                                 </div>
                             </li> 
                         </ul>
                     </li>    
 
-                    <li><i class="material-icons left" >home</i><a href="#/home" >Inicio</a></li>                
-                         
-                            
-                             <li style="background-color: #FFFFFF">
-                            <ul class="collapsible" style="background-color: #FFFFFF">
-                            <li>
-                             <a class="collapsible-header  waves-effect waves-teal" href="javascript:;" style="left:-15px;width:220px;"><i class="material-icons left" style="margin-left:-20px;margin-top:0px">exit_to_app</i>Permisos</a>
-                              <div class="collapsible-body" style="background-color: #FFFFFF">
-                                <ul>
-                                  <li><a href="#/listadoSolicitudes">Listado Permisos</a></li>
-                                  <li><a href="#/nuevoPermiso">Registrar Permiso</a></li>
-                                </ul>
-                              </div>
-                            </li>
-                          </ul>
-                        </li> 
-                        
-                            <li style="background-color: #FFFFFF">
-                            <ul class="collapsible" style="background-color: #FFFFFF">
-                            <li>
-                             <a class="collapsible-header  waves-effect waves-teal" href="javascript:;" style="left:-15px;width:220px;"><i class="material-icons left" style="margin-left:-20px;margin-top:0px">list</i>Reportes</a>
-                              <div class="collapsible-body" style="background-color: #FFFFFF">
-                                <ul>
-                                  <li><a href="#/reporteESarea">E/S por Area</a></li>
-                                </ul>
-                              </div>
-                            </li>
-                          </ul>
-                        </li> 
-                        
-                            <li><i class="material-icons left" >people</i><a href="#/funcionarios">Funcionarios</a></li>
-                            <li><i class="material-icons left" >settings</i><a href="#/configuracionHoraria">Configuracion Horaria</a></li>
+                            <li><i class="material-icons left" >home</i><a href="#/home" >Inicio</a></li>                
+                            <li><i class="material-icons left">flight_takeoff</i><a href="#/permisos">Solicitar Permisos</a></li>
+                            <li><i class="material-icons left">watch_later</i><a href="#/ausencias">Reportar Ausencia</a></li>
+                             <li><i class="material-icons left">thumb_up</i><a href="#/gestionCalidad">Gestion de Calidad</a></li>
                 </ul>
             </div>
 
@@ -98,30 +72,32 @@
   <script>
           function cerrarSesion(){
           Materialize.toast("Sesion finalizada",4000,'rounded');
-          sessionStorage.removeItem('sessionAdmin'); 
+          sessionStorage.removeItem('session'); 
           window.location.href = "../index.html";
         }
-            </script>
+  </script>
         <script src="../js/jquery/jquery-2.1.1.min.js"></script>
+        <script src="../js/sweetalert.min.js" type="text/javascript"></script>
         <script src="../js/materialize.js" type="text/javascript"></script>
         <script src="../js/angular/angular.js"></script>
         <script src="../js/angular/angular-route.js" type="text/javascript"></script>
         <script src="../js/angular/ui-utils.min.js" type="text/javascript"></script> 
-        <script src="../scripts/app.js" type="text/javascript"></script>
+       <script src="../scripts/app_funcionario.js" type="text/javascript"></script>
         <script src="../scripts/operacion_horas.js" type="text/javascript"></script>
         <!-- controladores-->
-        <script src="../scripts/controllers/indexController.js" type="text/javascript"></script>
-        <script src="../scripts/controllers/homeController.js" type="text/javascript"></script>
-        <script src="../scripts/controllers/funcionariosController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/indexController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionario/homeController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionario/permisosController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionario/ausenciaController.js" type="text/javascript"></script>
         <script src="../scripts/controllers/configuracionController.js" type="text/javascript"></script>
         <script src="../scripts/controllers/ESareaController.js" type="text/javascript"></script>
-        <script src="../scripts/controllers/permisosController.js" type="text/javascript"></script>
-         <!--Service--->
-         <script src="../scripts/services/areaService.js" type="text/javascript"></script>
+   
+         <!--Service-->
+         <script src="../scripts/services/ausenciaService.js" type="text/javascript"></script>
           <script src="../scripts/services/empleadoService.js" type="text/javascript"></script>
-          <script src="../scripts/services/permisosService.js" type="text/javascript"></script>
-          <script src="../scripts/services/horariosService.js" type="text/javascript"></script>
-          <script src="../scripts/services/reportesService.js" type="text/javascript"></script>
+       <script src="../scripts/services/permisosService.js" type="text/javascript"></script>
+         <!-- <script src="../scripts/services/horariosService.js" type="text/javascript"></script>
+          <script src="../scripts/services/reportesService.js" type="text/javascript"></script>-->
         <script>
 
 

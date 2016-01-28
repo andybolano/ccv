@@ -1,0 +1,106 @@
+<div ng-controller="ausenciaController" ng-init="byEmpleado();" class="contenedor"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor">
+                <div class="row">
+                    <div class='s12'>     <h2>Gestion de Ausencias</h2></div>
+                    <center><img src="../images/loading.gif" width="40px;" style="display: none;" id="loading_ausencia"></center><br>
+		  </div>  
+                
+                <table class="striped">
+                    <thead>
+                        <th width="20%">Titulo</th>
+                        <th>Descripcion</th>
+                        <th width="20px" style="text-align: center;">Adjuntar</th>
+                        <th width="10%" style="text-align: center;">Imagen</th>
+                        <th width="20px"  style="text-align: center;">Enviar</th>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: transparent;">
+                            <td><input type="text" ng-model="Ausencia.titulo" placeholder="Titulo" ng-required="true"></td>
+                            <td><input type="text" ng-required="true" placeholder="Descripcion" ng-model="Ausencia.descripcion" rows="6"></textarea></td>
+                            <td>
+                                <div class="file-field input-field col s12" style="margin-top:-5px;">
+                                    <div class="btn red">
+                                    <span>
+                                        <i class="mdi-image-photo-camera"></i>
+                                    </span>
+                                    <input id="files" uploader-model="Ausencia.imagen" type="file">
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="text-align: center">
+                                <div id="image">
+                                   
+                                </div>
+                            </td>
+                            <td style="text-align: center;"><button  id="guardar" title="Guardar" ng-click="guardar();" class="btn green" disabled><i class="material-icons">send</i></button></td>
+                        </tr>
+                        <tr ng-repeat="item in listadoAusencias">
+                            <td>{{item.titulo}}</td>
+                            <td>{{item.descripcion}}</td>
+                            <td>{{item.fecha}}</td>
+                            <td><img src="{{item.ruta}}"  width="40px" height="40px"></td>
+                            <td ng-if="item.estado=='0'"><img src="../images/report.png" width="20px"></td>
+                            <td ng-if="item.estado=='1'"><img src="../images/done.png" width="30px" style="border-radius:50%;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    $(document).ready(function() {
+   
+
+
+
+
+        function archivo(evt) {
+        
+            var files = evt.target.files; // FileList object
+
+            //Obtenemos la imagen del campo "file". 
+            for (var i = 0, f; f = files[i]; i++) {
+                //Solo admitimos imágenes.
+                if (!f.type.match('image.*')) {
+                    continue;
+                }
+
+                var reader = new FileReader();
+
+                reader.onload = (function(theFile) {
+                    return function(e) {
+                        // Creamos la imagen.
+                        document.getElementById("image").innerHTML = ['<img class="thumb"  width="50px" height="50px" style="border-radius:50%;" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                    };
+                })(f);
+                reader.readAsDataURL(f);
+            }
+        }
+
+        document.getElementById('files').addEventListener('change', archivo, false);
+
+        $(':file').change(function() {
+         
+            //obtenemos un array con los datos del archivo
+            var file = $("#files")[0].files[0];
+            //obtenemos el nombre del archivo
+            var fileName = file.name;
+            //obtenemos la extensión del archivo
+            //document.getElementById("nombreImagen").value=fileName;
+            fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+            //obtenemos el tamaño del archivo
+            var fileSize = file.size;
+            //obtenemos el tipo de archivo image/png ejemplo
+            var fileType = file.type;
+
+  
+            //mensaje con la información del archivo
+            // alert("<span class='info'>Archivo para subir: "+fileName+", peso total: "+fileSize+" bytes.</span>");
+        });
+    });
+</script> 

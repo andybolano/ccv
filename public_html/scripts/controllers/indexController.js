@@ -1,4 +1,4 @@
-app.controller('indexController', function($scope) {
+app.controller('indexController', function($scope,empleadoService) {
     hoy();
     function hoy() {
         var meses = new Array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
@@ -9,13 +9,29 @@ app.controller('indexController', function($scope) {
     }
     
     $scope.usuario = {};
+    $scope.puntaje = 0;
 
-usuario();
 
-function usuario(){
-   var usuario = JSON.parse(sessionStorage.getItem('session'));
-   console.log(usuario)
+
+$scope.usuarioAdmin = function (){
+   var usuario = JSON.parse(sessionStorage.getItem('sessionAdmin'));
    $scope.usuario = usuario[0];
+}
+
+$scope.usuario = function (){
+   var usuario = JSON.parse(sessionStorage.getItem('session'));
+   $scope.usuario = usuario[0];
+   puntajeTotal();
+}
+
+function puntajeTotal(){
+    var promisePost = empleadoService.getTotalPuntaje($scope.usuario.id); 
+        promisePost.then(function (pl) {
+              $scope.puntaje=pl.data[0].total;
+            },
+            function (errorPl) {
+                console.log('Error Al registrar datos', errorPl);
+            });
 }
 
 });

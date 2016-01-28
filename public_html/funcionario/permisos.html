@@ -1,0 +1,95 @@
+<div ng-controller="permisosController" class="contenedor"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor">
+                <div class="row">
+                    <div class='s12'>     <h2>Gestion de Permisos</h2></div>
+
+                    <center><img src="../images/loading.gif" width="40px;" style="display: none;" id="loading_solicitud"></center><br>
+                    <div class="row">
+                        <div class="col s4">  
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    Tipo de permiso
+                                </div>
+                                <select ng-model="permiso.tipoPermiso" class="browser-default" >
+                                    <option style="color:#000" ng-repeat="item in tipoPermisos" value="{{item.id}}">{{item.nombre}}</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div class="col s4">
+                           
+                                <left style="margin-left:10px;font-weight:900;font-size: 12px;color:#000;">
+                                    Informacion de Salida:
+                                </left>
+                                <div class="row">
+                                    <label class="item item-input col s8">
+                                        <div class="input-label">
+                                            Fecha:
+                                        </div>
+                                        <input type="date" ng-model="permiso.fechaSalida" placeholder="Fecha salida">
+                                    </label>
+                                    <label class="item item-input col s4">
+                                        <div class="input-label">
+                                            Hora:
+                                        </div>
+                                        <input type="time" ng-model="permiso.horaSalida"  placeholder="Hora de Salida">
+                                    </label>
+                                </div>
+                          
+                        </div>
+                        <div class="col s4">
+                            
+                                <left style="margin-left:10px;font-weight:900;font-size: 12px;color:#000;">
+                                    Informacion de Retorno:
+                                </left>
+                                <div class="row">
+                                    <label class="item item-input col s8">
+                                        <div class="input-label">
+                                            Fecha:
+                                        </div>
+                                        <input type="date" ng-model="permiso.fechaRetorno"  placeholder="Fecha retorno">
+                                    </label>
+                                    <label class="item item-input col s4">
+                                        <div class="input-label">
+                                            Hora:
+                                        </div>
+                                        <input type="time" ng-model="permiso.horaRetorno" placeholder="Hora de Retorno">
+                                    </label>
+                               
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col s4">
+                            <label>Descripcion</label>
+                            <textarea placeholder="Descripcion" ng-model="permiso.descripcion"vrows="6"></textarea>
+                            </div>
+                            
+                            <div class="col s4">
+                                <label>Permiso Remunerado</label>
+                            <div class="switch">
+                            <label>
+                              NO
+                              <input type="checkbox" ng-model="permiso.remuneracion">
+                              <span class="lever"></span>
+                              SI
+                            </label>
+                          </div>
+                            </div>
+  
+
+                            <div class="col s4">
+                                </br><br><br>
+                        <button id="btnEnviarSolicitud" class="btn green" ng-click="nuevo()">
+                            Enviar Solicitud
+                        </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

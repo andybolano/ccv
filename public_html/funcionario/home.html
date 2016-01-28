@@ -1,0 +1,36 @@
+<div ng-controller="homeController" class="contenedor"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor">
+                <div class="row">
+                    <div class='s12'><h2>Bienvenido(a)</h2></div>
+          
+      
+	  <div class="item item-text-wrap" ng-if="Jefe == 'true'">
+	     Nuevas Solicitudes de permiso<span class="badge badge-assertive">{{tamSolicitudes}}</span><br>
+	  </div>
+
+         <div class="row">           
+	  <div class="item item-text-wrap col s4">
+	    <small>Mis Permisos Activos</small><span class="new badge red">{{tamPermisos}}</span>
+            <br><br>
+            <div id="permisosActivos">
+
+	    </div>
+
+	  </div>
+             
+	  <div class="item item-text-wrap col s4">
+	     <small>Retraso del dia</small><span class="new badge red">00:00</span>
+	  </div>
+             
+	  <div class="item item-text-wrap col s4">
+	     <small>Retraso del mes</small><span class="new badge red">00:00</span>
+	  </div>
+         </div>  
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

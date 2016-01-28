@@ -13,36 +13,15 @@ class UsuarioController extends Controller
 {
     
     
-     public function autenticar(Request $request){
-        try {                                 
-          $data = $request->all();
-             $usuario = $data['username'];
-             $clave = $data['pass'];
-              $user = DB::select(DB::raw(
-                        "Select u.correo,u.Empleados_id,u.rol,u.estado, e.nombres, e.apellidos, e.noDocumento from usuarios as u
-                            INNER JOIN empleados as e ON e.id = u.Empleados_id
-                         WHERE u.correo =  '".$usuario."'  AND u.clave = '".$clave."' AND u.rol= 'ADMIN' "
-                    ));      
-           if (empty($user)){
-                return JsonResponse::create(array('message' => "KO", "request" =>json_encode('Datos Incorrectos')), 200);
-            }else{     
-                 return JsonResponse::create(array('message' =>"OK", "request" =>json_encode($user)), 200);
-              
-            }
-        
-      
-        } catch (Exception $exc) {
-            return JsonResponse::create(array('message' => "No se puedo autenticar el usuario", "request" =>json_encode($data)), 401);
-        }
-    }
-    public function autenticarMovil(Request $request){
+   
+    public function autenticar(Request $request){
         try {
             $id=0;
           $data = $request->all();
              $usuario = $data['username'];
              $clave = $data['pass'];
               $user = DB::select(DB::raw(
-                        "Select e.nombres,e.noDocumento,e.apellidos,e.id,cargos.nombre as cargo, areas.id as idArea, areas.nombre as area  from empleados as e 
+                        "Select e.nombres,e.noDocumento,e.apellidos,e.id,cargos.nombre as cargo, areas.id as idArea, areas.nombre as area, u.rol as rol   from empleados as e 
                         INNER JOIN cargos ON cargos.id = e.Cargos_id  
                         INNER JOIN areas ON areas.id = e.Areas_id
                         INNER JOIN usuarios as u ON u.Empleados_id = e.id

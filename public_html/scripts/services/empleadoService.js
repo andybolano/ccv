@@ -1,5 +1,9 @@
 app.service("empleadoService", function ($http) { 
     
+     this.getTotalPuntaje = function(empleado){
+          var req = $http.get(uri+'/empleado/puntaje/'+empleado);
+        return req;
+    };
     
      this.getAll = function(){
           var req = $http.get(uri+'/api/empleado');
