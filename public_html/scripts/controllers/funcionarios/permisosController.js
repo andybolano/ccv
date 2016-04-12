@@ -91,6 +91,9 @@ $scope.permiso = {};
            
             var usuario = JSON.parse(sessionStorage.getItem('session'));
     
+    if($scope.permiso.descripcion == undefined){
+        $scope.permiso.descripcion = "Sin descripcion";
+    }
          var object = {
            
           

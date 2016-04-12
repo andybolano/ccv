@@ -13,14 +13,47 @@ var app;
                     .when("/home",{
                         templateUrl: 'home.html'
                     })
+                    .when("/gestionCalidad/archivos",{
+                        templateUrl: 'gestionCalidad/archivos.html'
+                    })
+                    .when("/gestionCalidad/proceso",{
+                        templateUrl: 'gestionCalidad/proceso.html'
+                    })
+                     .when("/gestionCalidad/solicitudes",{
+                        templateUrl: 'gestionCalidad/solicitudes.html'
+                    })
+                    .when("/gestionCalidad/manual",{
+                        templateUrl: 'gestionCalidad/manualCalidad.html'
+                    })
+                    .when("/gestionCalidad/manualProceso",{
+                        templateUrl: 'gestionCalidad/manualProceso.html'
+                    })
+                    .when("/gestionCalidad/listadoInterno",{
+                        templateUrl: 'gestionCalidad/listadoMaestroInterno.html'
+                    })
+                    .when("/gestionCalidad/listadoExterno",{
+                        templateUrl: 'gestionCalidad/consultarArchivosExternos.html'
+                    })
                     .when("/ausencias",{
                         templateUrl: 'ausencia.html'
                     })
+                  
                     .when("/permisos",{
                         templateUrl: 'permisos.html'
                     })
                     .when("/gestionCalidad",{
                         templateUrl: 'gestionCalidad.html'
+                    })
+                    .when("/configuracion",{
+                        templateUrl: 'configuracion.html'
+                    })
+                    .when("/solicitudesPermisos",{
+                        templateUrl: 'solicitudesPermisos.html'
+                    })
+                    
+                   
+                    .when("/buzon",{
+                        templateUrl: 'buzon.html'
                     })
                     .otherwise({
                         redirectTo:"/home"

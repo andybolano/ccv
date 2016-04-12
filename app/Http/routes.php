@@ -23,3 +23,4 @@ include 'Routes/routesUsuario.php';
 include 'Routes/routesHorario.php';
 include 'Routes/routesPermiso.php';
 include 'Routes/routesAusencias.php';
+include 'Routes/routesCargo.php';

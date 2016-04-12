@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="timeIt_auditor">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Camara De Comercio - Valledupar</title> 
+        <link href="../css/materialize.css" rel="stylesheet"/>
+        <link href="../css/animate.css" rel="stylesheet">
+        <link href="../css/sweetalert.css" rel="stylesheet" type="text/css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet"/>
+        <link href="../css/map.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon">
+         <link rel="icon" href="../../public/favicon.ico" type="image/x-icon">
+              <script>
+                    if (sessionStorage.getItem('session')) {
+                         
+                    }else{
+                        window.location.href = "../index.html";
+                    }
+            </script>
+    </head>
+    <body>
+        <div ng-controller="indexController" data-ng-init="usuarioAuditor()"> 
+ 
+            <div class="navbar-fixed" id="nav">    
+                <nav>
+                    <div class="nav-wrapper blue accent-4">
+                        
+                       <a href="javascript:;"  class="brand-logo animated bounceIn" style="margin-left:5px;margin-top: 9px;"><img src="../images/logo.png" width="170px;"></a>
+                       <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a href="javascript:;" class="waves-effect waves-light"><i class="material-icons left" style="font-size:18px;">today</i>{{hoy}}</a></li>
+                            <li><a href="javascript:;" class="waves-effect waves-light" onclick="cerrarSesion();"><i class="material-icons left" style="font-size:18px;">input</i>Salir</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+
+
+            <div ng-view id="container">
+
+            </div>
+        </div>
+
+        <!-- jQuery and  -->
+  <script>
+          function cerrarSesion(){
+     
+          sessionStorage.removeItem('session'); 
+          window.location.href = "../index.html";
+        }
+  </script>
+        <script src="../js/jquery/jquery-2.1.1.min.js"></script>
+        <script src="../js/materialize.js" type="text/javascript"></script>
+        <script src="../js/angular/angular.js"></script>
+        <script src="../js/angular/angular-route.js" type="text/javascript"></script>
+        <script src="../js/angular/ui-utils.min.js" type="text/javascript"></script> 
+       <script src="../scripts/app_comite.js" type="text/javascript"></script>
+       <script src="../js/sweetalert.min.js" type="text/javascript"></script>
+        <!-- controladores-->
+       <script src="../scripts/controllers/indexController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionarios/archivosController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionarios/solicitudesController.js" type="text/javascript"></script>
+        <script src="../scripts/controllers/usuarioController.js" type="text/javascript"></script>
+         <!--Service-->
+      
+          <script src="../scripts/services/empleadoService.js" type="text/javascript"></script>
+      
+     
+         <!-- <script src="../scripts/services/horariosService.js" type="text/javascript"></script>
+          <script src="../scripts/services/reportesService.js" type="text/javascript"></script>-->
+        <script>
+
+
+
+                                var abierto;
+                                $(document).ready(function() {
+                                    abierto = true;
+                                    var alto = $(window).height();
+                                    document.getElementById('slide-out').style.height = alto - 40 + "px";
+                                });
+                                function abrirMenu() {
+                                    if (abierto) {
+                                        $("#slide-out").animate({"left": "-=220px"}, 300);
+                                        $("#container").animate({"padding-left": "-=220px"}, 300);
+                                        abierto = false;
+                                    } else {
+                                        abierto = true;
+                                        $("#slide-out").animate({"left": "+=220px"}, 300);
+                                        $("#container").animate({"padding-left": "+=220px"}, 300);
+                                    }
+                                }
+        </script>
+    </body>
+</html>

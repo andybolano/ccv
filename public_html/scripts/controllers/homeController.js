@@ -1,19 +1,58 @@
-app.controller('homeController', function($scope, empleadoService, horariosService, permisosService) {
+app.controller('homeController', function($scope, empleadoService, horariosService, permisosService, ausenciaService) {
 
 $scope.Funcionarios ="";
+$scope.top ="";
+$scope.noTop ="";
 $scope.numFuncionarios;
  $scope.Horarios= [];
  $scope.nuevasSolitidudes ={};
+  $scope.nuevasAusencias ={};
  $scope.numNuevasSolicitudes =0;
+  $scope.numNuevasAusencias =0;
+ $scope.mesConsulta;
 loadFuncionarios();
-$scope.mesConsulta;
 loadHorarios();
 nuevasSolicitudes();
+nuevasAusencias();
+loadTop();
+loadNoTop();
 var retrasos = new Array();
  /* var fecha = new Date();
   var fechaEnviar =fecha.getFullYear() + "-" + (fecha.getMonth() + 1) + "-" + (fecha.getDate()+1);
   */
+ 
+ function loadTop(){
+       var promiseGet = empleadoService.getTop(); 
+        promiseGet.then(function (pl) {
+          
+            $scope.top = pl.data;
+          
+        },
+              function (errorPl) {
+                   document.getElementById("loading").style.display="none";
+                  console.log('falla Cargando los funcionarios', errorPl);
+              });
+        
+    
+}
+ function loadNoTop(){
+       var promiseGet = empleadoService.getNoTop(); 
+        promiseGet.then(function (pl) {
+          
+            $scope.noTop = pl.data;
+          
+        },
+              function (errorPl) {
+                   document.getElementById("loading").style.display="none";
+                  console.log('falla Cargando los funcionarios', errorPl);
+              });
+        
+    
+}
+
+
  function nuevasSolicitudes(){
+    
         var promiseGet = permisosService.getNuevasSolicitudes(); 
         promiseGet.then(function (pl) {
             $scope.nuevasSolicitudes = pl.data;
@@ -23,6 +62,19 @@ var retrasos = new Array();
                   console.log('falla Cargando las Areas', errorPl);
               });
   }
+  function nuevasAusencias(){
+    
+        var promiseGet = ausenciaService.get(); 
+        promiseGet.then(function (pl) {
+            $scope.nuevasAusencias = pl.data;
+            console.log($scope.nuevasAusencias);
+            $scope.numNuevasAusencias = pl.data.length;
+        },
+              function (errorPl) {
+                  console.log('falla Cargando las Areas', errorPl);
+              });
+  }
+   
  
 function loadHorarios(){
       var promiseGet = horariosService.getAll(); 
@@ -78,6 +130,7 @@ $scope.showEmpleandoIndividual = function(empleado){
        setInputDate("#fechaConsulta");
     };
     $scope.getEntradaSalida = function(empleado_id){
+    
      document.getElementById("tablaDia").style.display="block";
      document.getElementById("tablaMes").style.display="none";
         $('#ES').html("");
@@ -110,9 +163,11 @@ $scope.showEmpleandoIndividual = function(empleado){
         promiseGet.then(function (pl) { 
        document.getElementById("loading_1").style.display="none";
             for(i=0;i<pl.data.length; i++){
+
                     horaLlegada = prepararHora(pl.data[i].hora);
-                    horaDeberia = prepararHora(pl.data[i].horaInicio);
+                    horaDeberia = prepararHora(pl.data[i].horaFinal);
                   
+              
                    if(pl.data[i].nombre=="Entrada Jornada Mañana" || pl.data[i].nombre=="Entrada Jornada Tarde"){
                          tiempoRetraso= substractTimes(horaLlegada, horaDeberia);
                     }
@@ -239,20 +294,22 @@ $scope.showEmpleandoIndividual = function(empleado){
                        
                          hora_llegada_man = prepararHora(pl.data[i].hora_entrada_jor_man);
                      
-                         hora_debio_man= prepararHora($scope.Horarios[y].horaInicio);
+                         hora_debio_man= prepararHora($scope.Horarios[y].horaRetraso);
                        
+
                          retraso_man=substractTimes(hora_llegada_man,hora_debio_man);
                 
-                     
-                                 
-                                 
+                       
                                  icon_1 = '<i class="material-icons">timer_off</i>';
                                  icon_1_impreso = "<img src='../images/timer-off.png' width='16px'>";
-                                 if(retraso_man < 0){
+                                 
+                                 
+                                 if(parseInt(retraso_man) < 0){
                                      retraso_man = "";
                                      icon_1 = "";
                                      icon_1_impreso="";
                                  }else{
+                                     
                                      retrasos.push(retraso_man);
                                  }
                                  break;
@@ -280,13 +337,14 @@ $scope.showEmpleandoIndividual = function(empleado){
                              if($scope.Horarios[y].id === pl.data[i].horario_et){
                                  
                          hora_llegada_tar = prepararHora(pl.data[i].hora_entrada_jor_tar);
-                         hora_debio_tar= prepararHora($scope.Horarios[y].horaInicio);
+                       
+                         hora_debio_tar= prepararHora($scope.Horarios[y].horaRetraso);
                          retraso_tar=substractTimes(hora_llegada_tar,hora_debio_tar);
                 
                       
                                  icon_2 = '<i class="material-icons">timer_off</i>';
                                  icon_2_impreso = "<img src='../images/timer-off.png' width='16px'>";
-                                 if(retraso_tar <= 0){
+                                 if(parseInt(retraso_tar) < 0){
                                      retraso_tar = "";
                                      icon_2 = '';
                                      icon_2_impreso="";

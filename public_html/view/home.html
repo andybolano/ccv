@@ -2,11 +2,11 @@
     <div class="row white">
         <div class="col s12 z-depth-1">
             <div class="contenedor">
-                <div class="row">
+               <div class="row">
                     <div class='s12'>     <h2>Bienvenido</h2></div>
                     <div class="col s6">  
                         <div class="row">
-                            <div class="col s8">
+                            <div class="col s6">
                                 <small>Funcionario Registrados<span class="new badge">{{numFuncionarios}}</span></small>
                                 <div id="loading" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
                             </div>
@@ -15,8 +15,8 @@
                             </div>
                         </div>
                         <div  style="height:300px;overflow-y:auto ">
-                            <table style="font-size: 12px;" class="bordered">
-                                <tr ng-repeat="item in Funcionarios| filter: filtro">
+                          <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in Funcionarios | filter: filtro">
                                     <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile animated bounceIn' style="width:20px;height: 20px"></td>
                                     <td>{{item.nombres}} {{item.apellidos}}</td>
                                     <td>{{item.cargo}}</td>
@@ -24,12 +24,11 @@
                                 </tr>
                             </table>
                         </div>
-
                     </div>
-                    <div class="col s3">                  
+                   <div class="col s3">                  
                         <small>Nuevas solicitudes de permisos<span class="new badge">{{numNuevasSolicitudes}}</span></small>
                         <div  style="height:300px;overflow-y:auto;margin-top: 25px; ">
-                            <table style="font-size: 12px;" class="bordered">
+                           <table style="font-size: 12px;" class="bordered">
                                 <tr ng-repeat="item in nuevasSolicitudes">
                                     <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
                                     <td>{{item.nombres}} {{item.apellidos}}</td>
@@ -39,33 +38,56 @@
                         </div>
                     </div>
                     <div class="col s3">  
-                        <small>Reportes de ausencia<span class="new badge orange">0</span></small>
-                        <table>
-                            <tr ng-repeat="">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                        <small>Reportes de ausencia<span class="new badge orange">{{numNuevasAusencias}}</span></small>
+                        <div  style="height:300px;overflow-y:auto;margin-top: 25px; ">
+                           <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in nuevasAusencias">
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td>{{item.nombres}} {{item.apellidos}}</td>
+                                    <td><a href="#/ausencias"><i class="material-icons left" style="font-size:13px">visibility</i></a></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class='white col s6 z-depth-1' style="width:49%">
-            <h5>Top cumplidos</h5><small>llegadas mas puntuales</small><span class="new badge blue">0</span>
+            <h5>Top cumplidos</h5><small>llegadas mas puntuales</small><span class="new badge green">10</span>
+            <div  style="height:300px;overflow-y:auto;margin-top: 25px; ">
+                           <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in top">
+                                    <td>{{$index+1}}</td>
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td>{{item.nombres}} {{item.apellidos}}</td>
+                                    <td><span class="bage green" >{{item.total}}</a></td>
+                                   
+                                </tr>
+                            </table>
+                        </div>
         </div>
         <div class='white col s6 z-depth-1' style="width:49%;margin-left:2%;">
-            <h5>Top incumplidos</h5><small>llegadas menos puntuales</small><span class="new badge red">0</span>
+            <h5>Top incumplidos</h5><small>llegadas menos puntuales</small><span class="new badge red">10</span>
+        <div  style="height:300px;overflow-y:auto;margin-top: 25px; ">
+                           <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in noTop">
+                                    <td>{{$index+1}}</td>
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td>{{item.nombres}} {{item.apellidos}}</td>
+                                    <td><span class="bage red" >{{item.total}}</a></td>
+                                   
+                                </tr>
+                            </table>
+                        </div>
         </div>
     </div>
 
     <div id="modalFuncionarioDetalles" class="modal modal-fixed-footer" style="width: 90%;min-height:85%;">
         <div class="modal-content">
-            <h2>{{title}}</h2>
-            <div class="row">
+          <h2>{{title}}</h2>
+           <div class="row">
                 <div class="col s2">
                     <img src="blob.php?id={{empleado.noDocumento}}" alt="Contact Person" class='profile-big animated bounceIn'>
 

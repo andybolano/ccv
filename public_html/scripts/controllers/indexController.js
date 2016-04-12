@@ -10,7 +10,7 @@ app.controller('indexController', function($scope,empleadoService) {
     
     $scope.usuario = {};
     $scope.puntaje = 0;
-
+$scope.Jefe = "";
 
 
 $scope.usuarioAdmin = function (){
@@ -21,13 +21,21 @@ $scope.usuarioAdmin = function (){
 $scope.usuario = function (){
    var usuario = JSON.parse(sessionStorage.getItem('session'));
    $scope.usuario = usuario[0];
+   $scope.Jefe = sessionStorage.getItem('jefe');
    puntajeTotal();
 }
-
+$scope.usuarioAuditor = function (){
+   var usuario = JSON.parse(sessionStorage.getItem('session'));
+   $scope.usuario = usuario[0];
+}
 function puntajeTotal(){
     var promisePost = empleadoService.getTotalPuntaje($scope.usuario.id); 
         promisePost.then(function (pl) {
+            if(pl.data[0].total == null){
+                $scope.puntaje=0;
+            }else{
               $scope.puntaje=pl.data[0].total;
+          }
             },
             function (errorPl) {
                 console.log('Error Al registrar datos', errorPl);

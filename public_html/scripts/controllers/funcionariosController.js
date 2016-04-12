@@ -142,13 +142,13 @@ function loadHorarios(){
             document.getElementById("loading_1").style.display="none";
                    for(i=0;i<pl.data.length; i++){
                     horaLlegada = prepararHora(pl.data[i].hora);
-                    horaDeberia = prepararHora(pl.data[i].horaInicio);
+                    horaDeberia = prepararHora(pl.data[i].horaRetraso);
                   
                    if(pl.data[i].nombre=="Entrada Jornada Mañana" || pl.data[i].nombre=="Entrada Jornada Tarde"){
-                         tiempoRetraso= substractTimes(horaLlegada, horaDeberia);
+                         tiempoRetraso= substractTimes(horaLlegada,horaDeberia);
                     }
                     
-                        if(tiempoRetraso<=0){
+                        if(parseInt(tiempoRetraso)< 0){
                            clase="success";  
                           retraso = "<i class='material-icons'>done</i>";      
                         }else{
@@ -267,7 +267,7 @@ function loadHorarios(){
                        
                          hora_llegada_man = prepararHora(pl.data[i].hora_entrada_jor_man);
                      
-                         hora_debio_man= prepararHora($scope.Horarios[y].horaInicio);
+                         hora_debio_man= prepararHora($scope.Horarios[y].horaRetraso);
                        
                          retraso_man=substractTimes(hora_llegada_man,hora_debio_man);
                 
@@ -276,7 +276,7 @@ function loadHorarios(){
                                  
                                  icon_1 = '<i class="material-icons">timer_off</i>';
                                  icon_1_impreso = "<img src='../images/timer-off.png' width='16px'>";
-                                 if(retraso_man < 0){
+                                 if(parseInt(retraso_man) < 0){
                                      retraso_man = "";
                                      icon_1 = "";
                                      icon_1_impreso="";
@@ -308,13 +308,13 @@ function loadHorarios(){
                              if($scope.Horarios[y].id === pl.data[i].horario_et){
                                  
                          hora_llegada_tar = prepararHora(pl.data[i].hora_entrada_jor_tar);
-                         hora_debio_tar= prepararHora($scope.Horarios[y].horaInicio);
+                         hora_debio_tar= prepararHora($scope.Horarios[y].horaRetraso);
                          retraso_tar=substractTimes(hora_llegada_tar,hora_debio_tar);
                 
                       
                                  icon_2 = '<i class="material-icons">timer_off</i>';
                                  icon_2_impreso = "<img src='../images/timer-off.png' width='16px'>";
-                                 if(retraso_tar <= 0){
+                                 if(parseInt(retraso_tar) < 0){
                                      retraso_tar = "";
                                      icon_2 = '';
                                      icon_2_impreso="";

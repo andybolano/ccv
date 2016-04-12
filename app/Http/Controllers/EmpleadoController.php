@@ -23,6 +23,29 @@ class EmpleadoController extends Controller
                
     }
     
+    public function getRetrasoDia(Request $request){
+        try {           
+            $data = $request->all();
+        
+            $empleado = $data["empleado"];
+            $fecha= $data["fecha"];
+            
+            $result = DB::select(DB::raw(
+                        "Select * from entradassalidas 
+                        WHERE Empleados_id = $empleado AND fecha = '$fecha'" 
+              ));
+     
+         if(count($result)>0){
+                return $result;
+         }else{
+             return 0;
+         }
+            
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No se pudo guardar el Horario", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
+    }
+    
     
     public function getById($empleado){
         
@@ -113,17 +136,36 @@ class EmpleadoController extends Controller
     
        public function getEntradaSalidaByMes($idEmpleado,$mes){
         $result = DB::select(DB::raw(
-               "SELECT es.id, es.fecha ,em.hora as hora_entrada_jor_man,em.Horarios_id as horario_em, sm.hora as hora_salida_jor_man,sm.Horarios_id as horario_sm, et.hora as hora_entrada_jor_tar, et.Horarios_id as horario_et, st.hora as hora_salida_jor_tar, st.Horarios_id as horario_st  FROM ( SELECT * FROM entradassalidas  WHERE Empleados_id = $idEmpleado AND month(fecha) = $mes )es
-left join (SELECT Empleados_id, Horarios_id, hora, fecha  FROM entradassalidas  WHERE    Horarios_id='1')em On es.fecha  = em.fecha
-left join (select Empleados_id, Horarios_id, hora, fecha  from  entradassalidas  WHERE   Horarios_id='2')sm On es.fecha = sm.fecha
-left join (select Empleados_id, Horarios_id, hora,fecha  from  entradassalidas  WHERE   Horarios_id='3')et On es.fecha = et.fecha
-left join (select Empleados_id, Horarios_id, hora, fecha  from  entradassalidas  WHERE   Horarios_id='4')st On es.fecha = st.fecha 
-GROUP BY fecha"
+               "SELECT es.id, es.Empleados_id, es.fecha ,em.hora as hora_entrada_jor_man,em.Horarios_id as horario_em, sm.hora as hora_salida_jor_man,sm.Horarios_id as horario_sm, et.hora as hora_entrada_jor_tar, et.Horarios_id as horario_et, st.hora as hora_salida_jor_tar, st.Horarios_id as horario_st  FROM 
+                ( SELECT * FROM entradassalidas  WHERE Empleados_id = $idEmpleado AND month(fecha) = $mes )es
+                left join (SELECT Empleados_id, Horarios_id, hora, fecha  FROM entradassalidas  WHERE    Horarios_id='1' AND  Empleados_id = $idEmpleado)em On es.fecha  = em.fecha
+                left join (select Empleados_id, Horarios_id, hora, fecha  from  entradassalidas  WHERE   Horarios_id='2' AND  Empleados_id = $idEmpleado)sm On es.fecha = sm.fecha
+                left join (select Empleados_id, Horarios_id, hora,fecha  from  entradassalidas  WHERE   Horarios_id='3' AND  Empleados_id = $idEmpleado)et On es.fecha = et.fecha
+                left join (select Empleados_id, Horarios_id, hora, fecha  from  entradassalidas  WHERE   Horarios_id='4' AND  Empleados_id = $idEmpleado)st On es.fecha = st.fecha 
+              
+                GROUP BY fecha"
       
         ));
         
         return $result;
     }
+    
+     public function getEntradaSalidaByMesGlobal($idEmpleado,$mes){
+        $result = DB::select(DB::raw(
+               "SELECT e.nombres,e.apellidos, e.noDocumento, es.id, es.Empleados_id, es.fecha ,em.hora as hora_entrada_jor_man,em.Horarios_id as horario_em,  et.hora as hora_entrada_jor_tar, et.Horarios_id as horario_et  FROM 
+                ( SELECT * FROM entradassalidas  WHERE Empleados_id = $idEmpleado AND month(fecha) = $mes )es
+                left join (SELECT Empleados_id, Horarios_id, hora, fecha  FROM entradassalidas  WHERE    Horarios_id='1' AND  Empleados_id = $idEmpleado)em On es.fecha  = em.fecha
+                left join (select Empleados_id, Horarios_id, hora, fecha  from  entradassalidas  WHERE   Horarios_id='2' AND  Empleados_id = $idEmpleado)sm On es.fecha = sm.fecha
+                left join (select Empleados_id, Horarios_id, hora,fecha  from  entradassalidas  WHERE   Horarios_id='3' AND  Empleados_id = $idEmpleado)et On es.fecha = et.fecha
+                left join (select Empleados_id, Horarios_id, hora, fecha  from  entradassalidas  WHERE   Horarios_id='4' AND  Empleados_id = $idEmpleado)st On es.fecha = st.fecha 
+                inner join empleados e on e.id = $idEmpleado
+                GROUP BY fecha"
+      
+        ));
+        
+        return $result;
+    }
+ 
     public function totalPuntaje($idEmpleado){
         $result = DB::select(DB::raw(
         "SELECT SUM(puntaje) as total FROM entradassalidas WHERE Empleados_id=$idEmpleado" 
@@ -131,6 +173,30 @@ GROUP BY fecha"
         
         return $result;
     }
+    
+    public function topPuntaje(){
+        $result = DB::select(DB::raw(
+             "SELECT SUM(puntaje) as total, Empleados_id, empleados.nombres, empleados.apellidos, empleados.noDocumento FROM entradassalidas 
+                INNER JOIN empleados ON empleados.id = Empleados_id 
+                GROUP BY Empleados_id ORDER BY total DESC LIMIT 0,10"
+              
+        ));
+        
+        return $result;
+    }
+    
+      public function noTopPuntaje(){
+        $result = DB::select(DB::raw(
+             "SELECT SUM(puntaje) as total, Empleados_id, empleados.nombres, empleados.apellidos, empleados.noDocumento FROM entradassalidas 
+                INNER JOIN empleados ON empleados.id = Empleados_id 
+                GROUP BY Empleados_id ORDER BY total ASC LIMIT 0,10"
+              
+        ));
+        
+        return $result;
+    }
+    
+    
     
      public function index()
     {

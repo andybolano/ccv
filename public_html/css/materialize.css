@@ -2356,7 +2356,7 @@ span.badge {
     background-color: #26a69a;
     border-radius: 2px; }
   span.badge.new:after {
-    content: " nuevos"; }
+     }
 
 .video-container {
   position: relative;
@@ -7968,7 +7968,7 @@ select {
 .picker__button--today[disabled]:before {
   border-top-color: #aaaaaa; }
 
-/* ==========================================================================
+/* ============================new badge==============================================
    CUSTOM MATERIALIZE STYLES
    ========================================================================== */
 .picker__box {

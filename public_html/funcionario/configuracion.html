@@ -1,0 +1,108 @@
+<div ng-controller="usuarioController" ng-init="init();" class="contenedor"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor">
+                <div class="row">
+                    <div class='s12'><h2>Configuracion de Usuario</h2></div>
+                    
+		  </div> 
+                
+                <div class="row">
+                    <div class="col s1">
+                         <div class="file-field input-field col s12">
+                                <div class="btn col s12">
+                                    <span><i class="mdi-image-photo-camera"></i></span>
+                                    <input type="file" id="files" name="files[]">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <!--<input class="file-path validate" type="text">-->
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col s4">
+                        <input type="hidden" id="idUser" value="">
+                        <div id="image">
+                        <img alt="image" class="circle" src="blob.php?id={{cedula}}" alt="Contact Person" class='profile' width="180px;" height="180px;">
+                        </div>
+                        <br>
+                       <img src="../images/loading.gif" width="40px;" style="display: none;margin-left:80px;" id="loading">
+                        <button class="btn red" id="boton" onclick="subirImagen()">Actualizar Foto</button>
+                        
+                  </div>
+                    <div class="col s4">
+                        <br>
+                        <label>Usuario</label>
+                        <input type="text" ng-model="usuario.usuario" id="usuario">
+                        
+                        <label>Contraseña Nueva</label>
+                        <input type="password" ng-model="usuario.password" id="clave">
+                        
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" ng-model="usuario.passwordConfirmada"><br><br>
+                        <button class="btn green" ng-click="actualizar();">Actualizar Informacion</button>
+                    </div>
+                </div>
+                
+
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+function archivo(evt) {
+        var files = evt.target.files;
+        for (var i = 0, f; f = files[i]; i++) {
+            if (!f.type.match('image.*')) {
+                continue;
+            }
+            var reader = new FileReader();
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    document.getElementById("image").innerHTML = ['<img  alt="Contact Person" class="circle" width="180px;" height="180px;" src="', e.target.result, '" title="', escape(theFile.name), '"/>'].join('');
+                };
+            })(f);
+            reader.readAsDataURL(f);
+        }
+    }
+    document.getElementById('files').addEventListener('change', archivo, false);
+    $(':file').change(function() {
+        var file = $("#files")[0].files[0];
+        var fileName = file.name;
+        fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        var fileSize = file.size;
+        var fileType = file.type;
+    });
+
+
+function subirImagen(){
+    var id= $("#idUser").val();
+   var files= document.getElementById("files").files;
+   
+  if(files[0] != undefined){
+   var formData=new FormData(); 
+    formData.append('id',id);
+    formData.append('foto',files[0]);
+
+document.getElementById("loading").style.display="block";
+document.getElementById("boton").disabled=true;
+    $.ajax({
+    url: "insert.php",
+    type: "POST",
+    dataType: "html",
+    data:formData,
+    cache: false,
+    contentType: false,
+    processData: false
+    })
+    .done(function(res){
+       var  respuesta  = eval("(" + res + ")");  
+       document.getElementById("loading").style.display="none";  
+       document.getElementById("boton").disabled=false;
+        swal("Buen Trabajo!",respuesta.message, "success");
+    });
+  }else{
+      
+  }
+   
+}
+</script>

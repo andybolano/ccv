@@ -1,6 +1,6 @@
 app.service("ausenciaService", function ($http) {  
   
-    
+   
     this.post= function (data) {
         var req = $http.get(uri+'/api/ausencia',data);
         return req;

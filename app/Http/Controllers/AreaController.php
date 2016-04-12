@@ -15,7 +15,7 @@ use DB;
 class AreaController extends Controller
 {
      public function getAll(){
-        return Area::select('id', 'codigo','nombre')
+        return Area::select('id','nombre')
                 ->orderBy('nombre', 'asc')
                 ->get();
     }

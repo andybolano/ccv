@@ -23,6 +23,17 @@ app.service("permisosService", function ($http) {
         return req;
     }
     
+    this.getSolicitudesByArea = function(area){
+		var req = $http.get(uri+'/api/permisos/solicitudes/areas/'+area);
+		return req;
+	}
+
+
+ this.updateFuncionario = function(object){
+       var req = $http.post(uri+'/api/permiso/updateMovil',object);
+        return req;
+    };
+    
 
     
     

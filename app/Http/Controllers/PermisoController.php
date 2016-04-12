@@ -53,17 +53,16 @@ class PermisoController extends Controller
         try {
             
  
-             $data = $request->all();
-             $permiso = Permiso::find($data['id']);
-             
-                 
-                    $permiso->vistoJefe = $data['estado'];
+            $data = $request->all();
+            $permiso = Permiso::find($data['id']);
+
+            $permiso->vistoJefe = $data['estado'];
                     
-                    if($permiso->vistoAutoriza == "1" && $data['estado'] == "1"){
-                        $permiso->estado = "AUTORIZADO";
-                    }else if($data['estado'] == "2"){
-                         $permiso->estado = "DENEGADO";
-                    }
+            if($permiso->vistoAutoriza == "1" && $data['estado'] == "1"){
+                 $permiso->estado = "AUTORIZADO";
+            }else if($data['estado'] == "2"){
+                  $permiso->estado = "DENEGADO";
+            }
                    
             
          

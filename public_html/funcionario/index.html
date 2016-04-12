@@ -26,10 +26,10 @@
             <div class="navbar-fixed" id="nav">    
                 <nav>
                     <div class="nav-wrapper blue accent-4">
-                        <a style="float:left;margin-top:10px;margin-left:10px;width:40px; height:40px;border-radius:6px;text-align: center;" class="waves-effect waves-light" onclick="abrirMenu();">
+                        <a id="btn-menu"  style="float:left;margin-top:10px;margin-left:10px;width:40px; height:40px;border-radius:6px;text-align: center;" class="waves-effect waves-light" onclick="abrirMenu();">
                             <i style="line-height:35px;" class="mdi-navigation-menu"></i>
                         </a>  
-                       <a href="#/home"  class="brand-logo animated bounceIn" style="margin-left:5px;margin-top: 9px;"><img src="../images/logo.png" width="170px;"></a>
+                       <a href="javascript:;"  class="brand-logo animated bounceIn" style="margin-left:5px;margin-top: 9px;"><img src="../images/logo.png" width="170px;"></a>
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a href="javascript:;" class="waves-effect waves-light"><i class="material-icons left" style="font-size:18px;">today</i>{{hoy}}</a></li>
                             <li><a href="javascript:;" class="waves-effect waves-light" onclick="cerrarSesion();"><i class="material-icons left" style="font-size:18px;">input</i>Salir</a></li>
@@ -47,8 +47,8 @@
                                 <div style="text-align: left;padding-top: 20px;padding-left: 10px;">
                                     <img alt="image" class="circle" style="border:2px solid #FFFFFF;" src="blob.php?id={{usuario.noDocumento}}" alt="Contact Person" class='profile' width="56px;" height="56px;">                            
                                                                       <div style="color:#FFFFFF;margin-top:-25px;font-size:12px;">{{usuario.rol}}</div>
-                                    <div style="color:#FFFFFF;font-weight:900;margin-top:-25px;">{{usuario.nombres}} {{usuario.apellidos}}</div>                    
-                                   <div style="color:#FFFFFF;margin-top:-25px;font-size:12px;">{{usuario.cargo}}</div>
+                                    <div style="color:#FFFFFF;font-weight:900;margin-top:-25px;" title="{{usuario.nombres}} {{usuario.apellidos}}">{{usuario.nombres}}</div>                    
+                                    <div style="color:#FFFFFF;margin-top:-25px;font-size:12px;" title="{{usuario.cargo}}">{{usuario.cargo| limitTo: 30 }}{{myString.length > 30 ? '...' : ''}}</div>
 
                                    <div style="color:#FFFFFF;margin-top:-25px;font-size:14px;"><i class="material-icons">favorite</i>&nbsp;&nbsp;{{puntaje}} pts</div>
                                 </div>
@@ -56,10 +56,48 @@
                         </ul>
                     </li>    
 
-                            <li><i class="material-icons left" >home</i><a href="#/home" >Inicio</a></li>                
-                            <li><i class="material-icons left">flight_takeoff</i><a href="#/permisos">Solicitar Permisos</a></li>
-                            <li><i class="material-icons left">watch_later</i><a href="#/ausencias">Reportar Ausencia</a></li>
-                             <li><i class="material-icons left">thumb_up</i><a href="#/gestionCalidad">Gestion de Calidad</a></li>
+                            <li><i class="material-icons left" >home</i><a href="#/home" >Inicio</a></li>  
+                            
+                            <li style="background-color: #FFFFFF">
+                            <ul class="collapsible" style="background-color: #FFFFFF">
+                            <li>
+                             <a class="collapsible-header  waves-effect waves-teal" href="javascript:;" style="left:-15px;width:220px;"><i class="material-icons left" style="margin-left:-20px;margin-top:0px">thumb_up</i>Gestion de Calidad</a>
+                              <div class="collapsible-body" style="background-color: #FFFFFF">
+                                <ul>
+                                <li><a href="#/gestionCalidad">Mapa de procesos</a></li>
+                                <li><a class='dropdown-button ' href='#' data-activates='dropdown1'>Subir Documentos</a></li>
+                                <li><a href="#/gestionCalidad/solicitudes">Mis Solicitudes</a></li>
+                                </ul>
+                              </div>
+                            </li>
+                          </ul>
+                        </li> 
+                        
+                         <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#/gestionCalidad/archivos">Nuevo</a></li>
+                        <li><a href="#/gestionCalidad">Modificar</a></li>
+    
+                        </ul>
+                        
+                          <li style="background-color: #FFFFFF">
+                            <ul class="collapsible" style="background-color: #FFFFFF">
+                            <li>
+                             <a class="collapsible-header  waves-effect waves-teal" href="javascript:;" style="left:-15px;width:220px;"><i class="material-icons left" style="margin-left:-20px;margin-top:0px">watch_later</i>Control de E/S</a>
+                              <div class="collapsible-body" style="background-color: #FFFFFF">
+                                <ul>
+                                    <li><a href="#/permisos">Solicitar Permisos</a></li>
+                                    <li><a href="#/ausencias">Reportar Ausencia</a></li>
+                                </ul>
+                              </div>
+                            </li>
+                          </ul>
+                        </li> 
+                        <li ng-if="Jefe == 'true'"><i class="material-icons left" >speaker_notes</i><a href="#/solicitudesPermisos" >Solicitudes Permisos</a></li>  
+                        
+                          
+                            
+                            <li><i class="material-icons left">email</i><a href="#/buzon">Buzon de sugerencias</a></li>
+                            <li><i class="material-icons left">settings</i><a href="#/configuracion">Configuracion</a></li>
                 </ul>
             </div>
 
@@ -86,16 +124,20 @@
         <script src="../scripts/operacion_horas.js" type="text/javascript"></script>
         <!-- controladores-->
        <script src="../scripts/controllers/indexController.js" type="text/javascript"></script>
-       <script src="../scripts/controllers/funcionario/homeController.js" type="text/javascript"></script>
-       <script src="../scripts/controllers/funcionario/permisosController.js" type="text/javascript"></script>
-       <script src="../scripts/controllers/funcionario/ausenciaController.js" type="text/javascript"></script>
-        <script src="../scripts/controllers/configuracionController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionarios/archivosController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionarios/homeController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionarios/permisosController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/funcionarios/ausenciaController.js" type="text/javascript"></script>
+        <script src="../scripts/controllers/funcionarios/solicitudesController.js" type="text/javascript"></script>
+        <script src="../scripts/controllers/funcionarios/solicitudesPermisosController.js" type="text/javascript"></script>
+       <script src="../scripts/controllers/configuracionController.js" type="text/javascript"></script>
         <script src="../scripts/controllers/ESareaController.js" type="text/javascript"></script>
-   
+        <script src="../scripts/controllers/usuarioController.js" type="text/javascript"></script>
          <!--Service-->
          <script src="../scripts/services/ausenciaService.js" type="text/javascript"></script>
           <script src="../scripts/services/empleadoService.js" type="text/javascript"></script>
        <script src="../scripts/services/permisosService.js" type="text/javascript"></script>
+       <script src="../scripts/services/usuarioService.js" type="text/javascript"></script>
          <!-- <script src="../scripts/services/horariosService.js" type="text/javascript"></script>
           <script src="../scripts/services/reportesService.js" type="text/javascript"></script>-->
         <script>

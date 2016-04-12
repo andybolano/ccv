@@ -1,10 +1,10 @@
 app.controller('ausenciaController', function($scope,ausenciaService) {
-$scope.Ausencia = {}
-$scope.listadoAusencias = {}
+$scope.Ausencia = {};
+$scope.listadoAusencias = {};
 
    $scope.guardar = function(){
 
- 
+
   if($scope.Ausencia.titulo == undefined || $scope.Ausencia.descripcion == undefined){
 
     
@@ -45,7 +45,7 @@ $scope.listadoAusencias = {}
         
     }
    }
-   
+  
    $scope.byEmpleado = function (){
           document.getElementById("guardar").disabled=false;
        var usuario = JSON.parse(sessionStorage.getItem('session'));
@@ -54,6 +54,7 @@ $scope.listadoAusencias = {}
          promisePost.then(function (d) {
          if(d.data==0){
              Materialize.toast("No tiene ausencias registradas",3000,"rounded");
+             
          }else{
           $scope.listadoAusencias = d.data;
         }

@@ -1,0 +1,136 @@
+  <div class="fixed-action-btn animated bounceInLeft" style="bottom: 45px; right: 24px;">
+                <a href="#/gestionCalidad" class="btn-floating btn-large waves-effect waves-light red">
+                    <i class="material-icons">reply</i>
+                </a>
+            </div>
+<div class="contenedor" style="zoom:80%;"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor"  ng-controller="archivosController" data-ng-init="cargarManualProcesos()">
+                   <div class="row">
+                     <div class="col s8">
+                         <h2>Manuales de Procesos</h2>
+                     </div>
+                         <div class="col s4">
+
+                        <div style='width:32px;float: left'>
+                            <i class="material-icons left">search</i>
+                        </div>
+                        <div style='float: left'>
+                            <small>Buscador</small>
+                        </div>
+                        <input id="search" type="text" placeholder="Item" ng-model="filtro" required>
+
+                    </div>
+                        </div>
+                  <!--<div class="col s2" style="border:1px solid #000;height:120px;border-top-left-radius:20px;border-bottom-left-radius:20px;border-right:0px">
+                      <center><img src="../images/logo-formato.png" style="height:90px;margin-top: 10px"></center>
+                    </div>
+                      <div class="col s8" style="border:1px solid #000;height:120px;border-right:0px"> 
+                          <br>
+                          <center><h5 style="font-size:22px;color:#0079C6;font-family:palatino;font-weight:600">FORMATO</br>LISTADO MAESTRO DE DOCUMENTOS INTERNOS</h5></center>
+                      </div>
+                    <div class="col s2" style="padding:0;border:1px solid #000;height:120px;border-top-right-radius:20px;border-bottom-right-radius:20px;">
+                        <table style="padding:0;margin: 0;font-size:16px;font-family:palatino;font-weight:600">
+                            <tr style="padding:0;margin: 0;border-bottom: 1px solid #000">
+                                <td>Código:SEG-FT-02</td>
+                            </tr>
+                            <tr  style="border-bottom: 1px solid #000">
+                                <td>Versión:06</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #000">
+                                <td >Actualización:06/02/2016</td>
+                            </tr>
+                            <tr>
+                                <td>Paginas:1 de 1</td>
+                            </tr>
+                        </table>
+                    </div>-->
+                        <table  class="striped">
+                            <thead>
+                            <th>Codigo</th>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                Proceso
+                            </th>
+                            <th>
+                               Subproceso
+                            </th>
+                            <th>
+                              Tipo de Documento
+                            </th>
+                            <th>
+                                Fecha Actualizacion
+                            </th>
+                            <th>
+                              Version
+                            </th>
+                            <th>
+                                Responsable del Doc.
+                            </th>
+                            <th>
+                                Responsable de Aprob.
+                            </th>
+                            <th>
+                                Ubicacion
+                            </th>
+                            <!--<th>
+                              Externo
+                            </th>-->
+                            <th>
+                                Cambio
+                            </th>
+                            <th>
+                              Estado
+                            </th>
+                          
+                            <th>
+                                Ver
+                            </th>
+                            <th>
+                                
+                            </th>
+                            </thead>
+                            <tbody>
+                                 <tr style="background-color:#FFF;display:none" id="loading">
+                                    <td colspan="14" style="text-align: center;">
+                                        </br> </br> </br>
+                                        <div class="col s12" style="margin-left:600%">
+                                            <img src="../images/loading.gif" style="width:70px;">   
+                                        </div>
+                                        </br> </br> </br>
+                                    </td>
+                                </tr>
+                                 <tr ng-repeat ="item in listadoManualProcesos | filter:filtro | orderBy:'archivo.codigo'" page-size="20" tolerance="100">
+                                    <td width="5%">{{item.archivo.codigo}}</td>
+                                    <td>{{item.archivo.nombre}}</td>
+                                    <td>{{item.archivo.nam_proceso}}</td>
+                                    <td>{{item.archivo.nam_subproceso}}</td>
+                                    <td>{{item.archivo.nam_documento}}</td>
+                                    <td>{{item.archivo.fecha}}</td>
+                                    <td>{{item.archivo.version}}</td>
+                                    <td>{{item.nombreResponsable}}</td>
+                                    <td>{{item.nombreResponsableApro}}</td>
+                                        <td title="{{item.archivo.url}}">{{item.archivo.url | limitTo: 30 }}{{myString.length > 30 ? '...' : ''}}</td>
+                                    <!--<td ng-if="item.externo =='true'"><img src='../../images/done.png' width="20px" style='border-radius:50%'></td>
+                                    <td ng-if="item.externo =='false'"><img src='../../images/close.png' width="20px" style='border-radius:50%'></td>
+                                   -->
+                                    
+                                   <td style="text-align: center" ><a href="javascript:;" ng-click="modalNota(item.archivo.nota,item.archivo.nombre,item.archivo.version)"><i class="material-icons">message</i></a></td>
+                                   <td><span class="bage orange darken-2">{{item.archivo.estado}}</span></td>
+                                  
+                         
+                                  
+                                   <td ng-if="item.archivo.extension == 'pdf' || item.archivo.extension == 'xlsx'"><a href="https://docs.google.com/viewer?url={{item.archivo.url}}" target="_blank" title="Visualizar"><i class="material-icons">visibility</i></a></td>
+                                   <td ng-if="item.archivo.extension != 'pdf' && item.archivo.extension != 'xlsx' "><a href="http://view.officeapps.live.com/op/view.aspx?src={{item.archivo.url}}" target="_blank" title="Visualizar"><i class="material-icons">visibility</i></a></td>
+                                   <td><a href="{{item.archivo.url}}" target="_blank" title="Descargar"><i class="material-icons">cloud_download</i></a></td>
+                                 </tr>
+                            </tbody>    
+                        </table>
+                
+            </div>
+        </div>
+    </div>
+</div>

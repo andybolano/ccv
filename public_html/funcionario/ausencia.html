@@ -34,15 +34,15 @@
                                    
                                 </div>
                             </td>
-                            <td style="text-align: center;"><button  id="guardar" title="Guardar" ng-click="guardar();" class="btn green" disabled><i class="material-icons">send</i></button></td>
+                            <td style="text-align: center;"><button  id="guardar" title="Enviar Ausencia" ng-click="guardar();" class="btn green" disabled><i class="material-icons">send</i></button></td>
                         </tr>
                         <tr ng-repeat="item in listadoAusencias">
                             <td>{{item.titulo}}</td>
                             <td>{{item.descripcion}}</td>
                             <td>{{item.fecha}}</td>
-                            <td><img src="{{item.ruta}}"  width="40px" height="40px"></td>
-                            <td ng-if="item.estado=='0'"><img src="../images/report.png" width="20px"></td>
-                            <td ng-if="item.estado=='1'"><img src="../images/done.png" width="30px" style="border-radius:50%;"></td>
+                            <td style="text-align: center" ><img src="{{item.ruta}}"  width="40px" height="40px"> </td>
+                            <td ng-if="item.estado=='0'" style="text-align: center"><img src="../images/report.png" width="20px" title="No ha sido revisado"></td>
+                            <td ng-if="item.estado=='1'" style="text-align: center"><img src="../images/done.png" width="30px" style="border-radius:50%;" title="Revisado"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-<script>
+<script>/*
     $(document).ready(function() {
    
 
@@ -102,5 +102,5 @@
             //mensaje con la información del archivo
             // alert("<span class='info'>Archivo para subir: "+fileName+", peso total: "+fileSize+" bytes.</span>");
         });
-    });
+    });*/
 </script> 

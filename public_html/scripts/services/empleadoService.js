@@ -10,6 +10,16 @@ app.service("empleadoService", function ($http) {
         return req;
     };
     
+     this.getTop = function(){
+          var req = $http.get(uri+'/api/empleados/puntajes');
+        return req;
+    };
+     this.getNoTop = function(){
+          var req = $http.get(uri+'/api/empleados/noTopPuntajes');
+        return req;
+    };
+    
+    
    this.getById = function(empleado){
           var req = $http.get(uri+'/api/empleado/'+empleado);
         return req;
@@ -39,6 +49,11 @@ app.service("empleadoService", function ($http) {
     
     this.getEsByMes = function (empleado,mes){
         var req = $http.get(uri+'/api/empleado/entradaSalida/'+empleado+'/mes/'+mes);
+        return req;
+    }
+    
+    this.getRetrasoDia = function(object){
+        var req = $http.post(uri+'/api/empleado/retrasoDia',object);
         return req;
     }
 

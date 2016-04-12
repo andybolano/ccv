@@ -17,14 +17,22 @@ var app;
                     .when("/nuevoPermiso",{
                         templateUrl: 'permisos/nuevoPermiso.html'
                     })
+                    
                     .when("/funcionarios",{
                         templateUrl: 'funcionarios.html'
                     })
+                     
                     .when("/configuracionHoraria",{
                         templateUrl: 'configuracionHoraria.html'
                     })
                     .when("/reporteESarea",{
                         templateUrl: 'reportes/reporteESarea.html'
+                    })
+                    .when("/ausencias",{
+                        templateUrl: 'reportes/ausencias.html'
+                    })
+                     .when("/retrasos",{
+                        templateUrl: 'reportes/retrasos.html'
                     })
                     .otherwise({
                         redirectTo:"/home"
@@ -55,6 +63,8 @@ var app;
             return input;
         };
     });
+    
+    
     
     app.directive('uploaderModel',['$parse',function($parse){
         return{

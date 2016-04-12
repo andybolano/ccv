@@ -1,0 +1,338 @@
+<div class="contenedor" style="zoom:85%;"> 
+    <div class="row white">
+        <div class="col s12 z-depth-1">
+            <div class="contenedor" ng-controller="solicitudesController" data-ng-init="cargarSolicitides()">
+                <h2>Documentos en espera de aprobación</h2>
+            
+            
+            <table  class="striped">
+                            <thead>
+                            <th>No</th>
+                            <th>PROCESO</th>
+                            <th>
+                                SUBPROCESO
+                            </th>
+                            <th>
+                                RESPONSABLE
+                            </th>
+                            <th>
+                              CODIGO
+                            </th>
+                            <th>
+                              NOMBRE DEL DOCUMENTO
+                            </th>
+                            <th>
+                               VERSIÓN
+                            </th>
+                            <th>
+                             FECHA DE ACTUALIZACIÓN
+                            </th>
+                            <th>
+                               CAMBIO
+                            </th>                           
+                            <th>
+                               RESPONSABLE DE APROBACIÓN
+                            </th>
+                            <!--<th>
+                              Externo
+                            </th>-->
+                            <th>
+                                ESTADO
+                            </th>
+                            <th width="5%" style="text-align: center">PLAN DE CAMBIOS</th>
+                          
+                            <th colspan="2">
+                             
+                            OPCIONES
+                                
+                            </th>
+                             <th>
+                               CALIDAD
+                           </th>
+                             <th>
+                               APRO. COMIT.
+                           </th> 
+                          
+                           <th>
+                               RESPUESTAS
+                           </th>
+                           <th>
+                               EDITAR
+                           </th>
+                           <th>
+                               ELIMINAR
+                           </th>
+                            </thead>
+                            <tbody>
+                                 <tr style="background-color:#FFF; display: block"  id="loading">
+                                    <td colspan="14" style="text-align: center;">
+                                        </br> </br> </br>
+                                          <div class="col s12" style="margin-left:700%">
+                                            <img src="../images/loading.gif" style="width:70px;">   
+                                        </div>
+                                        </br> </br> </br>
+                                 
+                                    </td>
+                                </tr>
+                                 <tr ng-repeat ="item in solicitudes" page-size="20" tolerance="100">
+                                     <td>{{$index + 1}}</td>
+                                    <td>{{item.archivo.nam_proceso}}</td>
+                                     <td>{{item.archivo.nam_subproceso}}</td>
+                                     <td>{{item.nombreResponsable}}</td>
+                                    <td width="5%">{{item.archivo.codigo}}</td>
+                                    
+                                    <td>{{item.archivo.nombre}}</td>
+                                    
+                                    
+                                     <td>{{item.archivo.version}}</td>
+                                    <td>{{item.archivo.fecha}}</td>
+       
+                                         <td style="text-align: center" ><a href="javascript:;" ng-click="modalNota(item.archivo.nota,item.archivo.nombre, item.archivo.version)"><i class="material-icons">message</i></a></td>
+                                         
+                                         <td>{{item.nombreResponsableApro}}</td>
+                                         <td width="15%"><span class="bage teal darken-2">{{item.archivo.estado}}</span></td>
+                                         <td style="text-align: center" ><a href="javascript:;" ng-click="modalFormatoCambios(item.archivo.descripcion,item.archivo.razones,item.archivo.afecta,item.archivo.necesidades,item.archivo.flujo, item.archivo.ajuste)"><i class="material-icons">assignment</i></a></td>
+                               
+                                    <!--<td ng-if="item.externo =='true'"><img src='../../images/done.png' width="20px" style='border-radius:50%'></td>
+                                    <td ng-if="item.externo =='false'"><img src='../../images/close.png' width="20px" style='border-radius:50%'></td>
+                                   -->
+                                    
+                              
+                                   
+                                  
+
+                                   <td ng-if="item.archivo.extension == 'pdf' || item.archivo.extension == 'xlsx'"><a href="https://docs.google.com/viewer?url={{item.archivo.url}}" target="_blank" title="Visualizar"><i class="material-icons">visibility</i></a></td>
+                                   <td ng-if="item.archivo.extension != 'pdf' && item.archivo.extension != 'xlsx' "><a href="http://view.officeapps.live.com/op/view.aspx?src={{item.archivo.url}}" target="_blank" title="Visualizar"><i class="material-icons">visibility</i></a></td>
+                                   <td><a href="{{item.archivo.url}}" target="_blank" title="Descargar"><i class="material-icons">cloud_download</i></a></td>
+                                 
+                                   
+                                       
+                                   <td ng-if="item.archivo.aprobacionresponsable == '0'"><i class="material-icons" style="color:#ef6c00;" title="Este documento a un no ha sido revisado">pan_tool</i></td>
+                                   <td ng-if="item.archivo.aprobacionresponsable == '2'"><i class="material-icons" style="color:#b71c1c;" title="Este documento ha sido rechazado">close</i></td>
+                                   <td ng-if="item.archivo.aprobacionresponsable == '1'"><i class="material-icons" style="color:#558B2F;"title="Este documento ha sido aprobado">done</i></td>
+                                  
+                                         <td ng-if="item.archivo.aprobacioncomite == '0'" style="text-align: center;"><i class="material-icons" style="color:#ef6c00;" title="Este documento a un no ha sido revisado">pan_tool</i></td>
+                                       <td ng-if="item.archivo.aprobacioncomite == '2'"><i class="material-icons" style="color:#b71c1c;" title="Este documento ha sido rechazado">close</i></td>
+                                         <td ng-if="item.archivo.aprobacioncomite == '1'" style="text-align: center;"><i class="material-icons" style="color:#558B2F;" title="Este documento ha sido aprobado">done</i></td>
+                                   
+                                   <td style="text-align: center">
+                                       <a href="javascript:;"  ng-click="modalRespuesta(item.archivo.nombre, item.archivo.idDoc)"><i class="material-icons" style="color:#b71c1c;">speaker_notes</i></a>
+                                       <span class="bage orange">{{item.archivo.totalMensajes}}</span>
+                                   </td>
+                                  <td  style="text-align: center"><a href="javascript:;" title="Editar informacion del archivo" ng-click="modalEdit(item)"><i class="material-icons" style="color:#4CAF50">edit</i></a></td>
+                                  <td  style="text-align: center"><a href="javascript:;" title="Eliminar solicitud" ng-click="eliminarSolicitud(item.archivo.idDoc)"><i class="material-icons" style="color:#F44336">delete</i></a></td>
+                                 </tr>
+                            </tbody>    
+                        </table>
+                
+                <div class="modal modal-fixed-footer" id="nota">
+                           <div class="modal-content">
+                               <p style="font-size:16px;">Cambios realizados en : <span id="nombreArchivo" style="font-weight:600">{{nombre}}</span> </p>
+                               <p style="font-size:16px;">Version : <span id="nombreArchivo" style="font-weight:600">{{version}}</span> </p>
+                               <div class="row">
+                                   {{nota}}
+                               </div>
+                            </div>
+                                <div class="modal-footer">
+                                        <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+                                </div>
+                        </div>
+                
+                <div class="modal modal-fixed-footer" id="formatocambios" style="min-height: 90%;">
+                    <div class="modal-content">
+                        <p style="font-size:16px;font-weight:900">PLANIFICACIÓN CAMBIOS QUE AFECTAN SISTEMA DE GESTIÓN DE CALIDAD <br> <span id="nombreArchivoFormato" style="font-weight:600"></span> </p>
+                               <div class="row">
+                                   <p style="font-size:16px;">DESCRIPCIÒN DEL CAMBIO: </p>
+                                   <textarea id="descripcionCambio"  ng-model="formatocambios.descripcion" value="" autofocus >
+                                       
+                                   </textarea>
+                               </div>
+                                <div class="row">
+                                   <p style="font-size:16px;">RAZONES DEL CAMBIO: </p>
+                                   <textarea id="razonesCambio" ng-model="formatocambios.razones"  value="" autofocus>
+                                       
+                                   </textarea>
+                               </div>
+                               <div class="row">
+                                   <p style="font-size:16px;">COMO AFECTA EL CAMBIO AL SISTEMA DE GESTIÓN DE LA CALIDAD: </p>
+                                   <textarea id="afectaCambio" value="" ng-model="formatocambios.afecta"  autofocus>
+                                       
+                                   </textarea>
+                               </div>
+                               <div class="row">
+                                   <p style="font-size:16px;">NECESIDADES DE DOCUMENTACIÓN/PERSONAL/EQUIPO/INSTALACIONES:</p>
+                                   <textarea id="necesidadesCambio" value="" ng-model="formatocambios.necesidades"  autofocus>
+                                       
+                                   </textarea>
+                               </div>
+                               <div class="row">
+                                   <p style="font-size:16px;">FLUJO DE ACTIVIDADES Y REGISTROS NECESARIOS:</p>
+                                   <textarea id="flujoCambio" value="" ng-model="formatocambios.flujo"  autofocus>
+                                       
+                                   </textarea>
+                               </div>
+                               <div class="row">
+                                   <p style="font-size:16px;">AJUSTES NECESARIOS PARA MANTENER EL SISTEMA:</p>
+                                   <textarea id="ajusteCambio" value="" ng-model="formatocambios.ajuste"  autofocus>
+                                       
+                                   </textarea>
+                               </div>
+                    </div>
+                     <div class="modal-footer">
+                        <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+                     </div>
+                </div>
+                
+                <div class="modal modal-fixed-footer" id="respuesta" style="min-height: 90%;width:90%">
+                    <div class="modal-content">
+                        
+                        <p style="font-size:16px;font-weight:900">RESPUESTAS PARA: <span id="nombreArchivo" style="font-weight:600">{{nombre}}</span> </p>
+                               <div class="row">
+                                   <div class="col s12">
+                                       <p>Historia de respuestas</p>
+                                       <table class="striped bordered">
+                                           <thead>  
+                                               <th width="70%">
+                                                   Mensaje
+                                               </th>
+                                               <th width="10%">
+                                                   Fecha
+                                               </th>    
+                                               <th width="20%">
+                                                   Emisor
+                                               </th>
+                                               <th width="10%">
+                                                   Revisado
+                                               </th>
+                                           </thead>
+                                           <tbody>
+                                               <tr ng-repeat ="item in historiadocumentos">
+                                                   <td>{{item.mensaje}}</td>
+                                                   <td>{{item.fecha}}</td>
+                                                   <td>{{item.emisor}}</td>
+                                                   <td ng-if="item.revisado =='0'" style="text-align:center;"><button title="Notifica que ya has revisado este mensaje" class="waves-effect waves-light btn-improvised" ng-click="revisado(item.documento,item.id)"><i class="material-icons center"></i></button></td>
+                                                   <td ng-if="item.revisado =='1'" style="text-align:center;"><i class="material-icons center " style="color:#558B2F;">done</i></button></td>
+                                               </tr>
+                                           </tbody>    
+                                       </table> 
+                                   </div>
+                                  
+                               </div>
+                               
+                    </div>
+                     <div class="modal-footer">
+                        <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+                     </div>
+                </div>
+                
+                   <div class="modal modal-fixed-footer" id="edit" style="min-width:90%;min-height:80%">
+                           <div class="modal-content" style="padding:0">
+                             
+                           <div class="row">                                         
+                            <div class="col s6 green" style="background-color:#c3c3c3;padding-top:20px">
+                               <h2 style="color:#FFF;font-size:20px;">Editar Informacion de Archivo:<span id="nombreArchivo" style="font-weight:600">{{nombre}}</span> </h2>
+                               </div>
+                           </div>
+                      
+                               
+                         <div class="col s12">
+                               <div class="row">
+                                   <div class="col s2"> 
+                                       <input type="hidden" id="idArchivo">
+                                       <input type="hidden" id="idDocumento">
+                                   <p>Proceso:</p>
+                                   <select id="proceso" class="browser-default" onchange="angular.element(this).scope().cargarSubprocesosEdit(this.value)">
+                                      
+                                   </select>
+                                   </div>
+                                   <div class="col s2"> 
+                                   <p>SubProceso:</p>
+                                   <select id="subproceso" class="browser-default">
+                                      
+                                   </select>
+                                   </div>
+                                   <div class="col s2"> 
+                                   <p>Tipo de documentos:</p>
+                                   <select id="documentos" class="browser-default">
+                                      
+                                   </select>
+                                   </div>
+                                   <div class="col s2"> 
+                                   <p>Fecha Actualizacion:</p>
+                                   <input type="date" id="fechaActualizacion">
+                                   </div>
+                                   <div class="col s2"> 
+                                   <p>Version:</p>
+                                   <input type="number" id="version">
+                                   </div>
+                               </div>
+                            <div class="row">
+                                   
+                                   
+                                   <div class="col s4"> 
+                                   <p>Responsable del Documento:</p>
+                                  <select id="responsableDocumento" class="browser-default" >
+                                      
+                                   </select>
+                                   </div>
+                                <div class="col s4"> 
+                                   <p>Responsable de Aprobacion:</p>
+                                   <select id="responsableAprobacion" class="browser-default">
+                                      
+                                   </select>
+                                   </div>
+                                
+                               </div>
+                            <div class="row">
+                                 <div class="col s4"> 
+                                    <p>Cambio:</p>
+                                    <textarea id="cambio"  class="browser-default"></textarea>
+                                </div>
+                            </div>
+                            </div>
+                               <div class="row">
+                                  
+                                  <div class="col s4">
+                                      <br>Reemplazar Archivo vigente:<br><br>
+                                             <form>
+                                                <input type="file" id="file_edit" uploader-model="File.documento_edit"  onchange="angular.element(this).scope().visualizarOneEdit()">
+                                            </form>
+                                       </div>
+                              </div>
+                             <div class="row">
+                                 <div class="col s6">
+                                        <table>
+                                           <thead>
+                                           <th>
+                                               id
+                                           </th>
+                                            <th>
+                                               Nombre
+                                           </th>
+                                            <th>
+                                               Tamaño
+                                           </th>
+                                           <th>
+                                               version
+                                           </th>
+                                           </thead>    
+                                           <tbody id="listaVersion_edit">
+                                               
+                                           </tbody>
+                                       </table>
+                                 </div>
+                             </div>
+                           </div>
+                               
+                     
+                     
+                                <div class="modal-footer">
+                                    <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn green " style="margin-left:10px;" onclick="angular.element(this).scope().actualizarAchivos()">Modificar</a>
+                                      <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+                                </div>
+                        </div>
+            
+        </div>
+        </div>
+    </div>
+</div>

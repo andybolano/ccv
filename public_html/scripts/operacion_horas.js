@@ -39,7 +39,6 @@ return ((Number(min) * 60) + (Number(hor) * 3600));
 
 
 function prepararHora(hora){
-
     if(hora.length == 2){
         hora = "00:"+hora;
         return hora;

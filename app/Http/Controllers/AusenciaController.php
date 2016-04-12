@@ -18,9 +18,12 @@ class AusenciaController extends Controller
     }
     
     public function getAll(){
-        return Ausencia::select('id', 'titulo')
-                ->orderBy('titulo', 'asc')
-                ->get();
+         $result = DB::select(DB::raw(
+                        "Select a.*, e.nombres, e.apellidos, e.noDocumento from ausencia as a
+                         INNER JOIN empleados as e ON e.id = a.idEmpleado  
+                        " 
+                    )); 
+              return $result;
     }
 
         /**
@@ -31,7 +34,12 @@ class AusenciaController extends Controller
     public function index()
     {
         try {
-            return Ausencia::all();   
+            $result = DB::select(DB::raw(
+                        "Select a.*, e.nombres, e.apellidos, e.noDocumento from ausencia as a
+                         INNER JOIN empleados as e ON e.id = a.idEmpleado   
+                        " 
+                    )); 
+              return $result;  
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();
         }
@@ -74,7 +82,7 @@ class AusenciaController extends Controller
             $ausencia->estado = "0";
             $ausencia->save();
             
-            $ausencia->ruta = "http://".$_SERVER['HTTP_HOST'].'/camaradecomercio/img/ausencia/'.$ausencia->id.".jpg";
+            $ausencia->ruta = "http://".$_SERVER['HTTP_HOST'].'/timeit/img/ausencia/'.$ausencia->id.".jpg";
             $ausencia->save();
             
             

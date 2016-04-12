@@ -6,11 +6,26 @@
                     <div class='s12'><h2>Bienvenido(a)</h2></div>
           
       
-	  <div class="item item-text-wrap" ng-if="Jefe == 'true'">
-	     Nuevas Solicitudes de permiso<span class="badge badge-assertive">{{tamSolicitudes}}</span><br>
-	  </div>
-
-         <div class="row">           
+                    
+                    
+            <div class="row">           
+	  <div class="item item-text-wrap col s4" ng-if="Jefe == 'true'">        	
+              <small> Nuevas Solicitudes de permiso</small><span class="new badge red">{{tamSolicitudes}}</span>
+            <br><br>
+            <div id="solicitudesPermiso">
+                 <div  style="height:300px;overflow-y:auto;margin-top: 25px; ">
+                           <table style="font-size: 12px;" class="bordered">
+                                <tr ng-repeat="item in listaNew">
+                                    <td><img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile' style="width:20px;height: 20px"></td>
+                                    <td>{{item.nombres}} {{item.apellidos}}</td>
+                                    <td><a href="#/solicitudesPermisos"><i class="material-icons left" style="font-size:13px">visibility</i></a></td>
+                                </tr>
+                            </table>
+                        </div>
+	    </div>
+          
+          </div>
+                     
 	  <div class="item item-text-wrap col s4">
 	    <small>Mis Permisos Activos</small><span class="new badge red">{{tamPermisos}}</span>
             <br><br>
@@ -20,9 +35,23 @@
 
 	  </div>
              
-	  <div class="item item-text-wrap col s4">
-	     <small>Retraso del dia</small><span class="new badge red">00:00</span>
-	  </div>
+	  <!--<div class="item item-text-wrap col s4">
+	    
+             <table>
+                 <tr>
+                     <td><small>Retraso del dia</small></td>
+                     <td style="text-align: center;"><span class="new badge red">{{retrasos.totalDia}}</span></td>
+                 </tr>    
+                 <tr>
+                     <td>Entrada Mañana:</td>
+                     <td style="text-align: center">{{entradas.manana}}</td>
+                 </tr>
+                  <tr>
+                     <td>Entrada Tarde:</td>
+                     <td>{{entradas.tarde}}</td>
+                 </tr>
+             </table>
+	  </div>-->
              
 	  <div class="item item-text-wrap col s4">
 	     <small>Retraso del mes</small><span class="new badge red">00:00</span>

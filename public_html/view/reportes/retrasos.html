@@ -1,0 +1,141 @@
+ <div ng-controller="retrasosController" class="contenedor" data-ng-init="getHorarios()"> 
+     <div class="row white">
+         <div class="col s12 z-depth-1">
+             <div class="contenedor">
+                 <div class="row">
+                     <div class="col s12">
+                         <h2>Informe de  Retrasos</h2>  
+                     </div>
+                     
+       <div class="col s4">
+                        
+                         <div style='width:32px;float: left'>
+                         <i class="material-icons left">event_available</i>
+                         </div>
+                           <div style='float: left'>
+                         <small>Mes</small>
+                         <select ng-model="mesConsulta" class="browser-default" name="mes" id="mes" ng-change="getRetrasos(empleado.id)" required>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Marzo</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Mayo</option>
+                                <option value="6">Junio</option>
+                                <option value="7">Julio</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Septiembre</option>
+                                <option value="10">Octubre</option>
+                                <option value="11">Noviembre</option>
+                                <option value="12">Diciembre</option>
+                            </select> 
+                          </div>
+                        
+                        
+                     </div>
+                     
+                     
+                     <div class="col s4">
+                        
+                         <div style='width:32px;float: left'>
+                          <i class="material-icons left">search</i>
+                         </div>
+                           <div style='float: left'>
+                         <small>Buscador</small>
+                          </div>
+                         <input id="search" type="text" placeholder="Item" ng-model="filtro" required>
+                        
+                     </div>
+                 </div>   
+                 <div class="row">
+                     Mes 0{{mesConsulta}} del 2016
+                     <div class="col s12">
+                        <table class="bordered striped">
+                            <thead> 
+                            <tr>
+ 
+                                <th width='32px'></th>
+                                <th>Funcionario</th>
+                                <td>Total retraso</td>
+                            </tr>
+                            </thead>
+                            <tbody style="height:100px;overflow-y: auto;">
+                                <tr ng-repeat="item in listaRetrasos | filter: filtro | orderBy : '-total' " page-size="20" tolerance="100" >
+                                    <td>
+                                   <img src="blob.php?id={{item.cedula}}" alt="Contact Person" class='profile'>
+                                    </td>
+                                    <td>{{item.nombres}}</td>
+                                    <td><h2 style='font-weight: 900;color:red;font-size:20px;margin-top:6px;'>{{item.total}}</h2></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                         <div id="loading" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
+                     </div>
+                
+                   </div>
+                 <div class="row" id="impresion" style="display:none">
+                     <table width="100%">
+                         <tr>
+                              <td width="30%"><img src="../images/logoCompleto.png" alt="" width="200px;"/></td>
+                              <td width="30%" style="text-align: center"><h2>Reporte de Retrasos <br> Mes 0{{mesConsulta}} del 2016</h2></td> 
+                              <td></td>
+                         </tr>
+                         
+                     </table>
+                     <div class="col s12">
+                        <table class="bordered striped">
+                            <thead> 
+                            <tr>
+ 
+                                <th width='32px'></th>
+                                <th>Funcionario</th>
+                                <td>Total retraso</td>
+                            </tr>
+                            </thead>
+                            <tbody style="height:100px;overflow-y: auto;">
+                                <tr ng-repeat="item in listaRetrasos | filter: filtro | orderBy : '-total' " page-size="20" tolerance="100" >
+                                    <td>
+                                   <!--<img src="blob.php?id={{item.cedula}}" alt="Contact Person" class='profile' style="width:32px; height:32px;border-radius: 50%;">-->
+                                    </td>
+                                    <td>{{item.nombres}}</td>
+                                    <td><h2 style='font-weight: 900;color:red;font-size:20px;margin-top:6px;'>{{item.total}}</h2></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      
+                     </div>
+                
+                   </div>
+                 </div>
+             </div>
+         </div>
+      <div class="fixed-action-btn" style="bottom: 60px; right: 40px;">
+             <a class="btn-floating btn-large waves-effect waves-light red" onclick="imprimir();"><i class="material-icons">local_printshop</i></a>
+          </div>
+     </div>
+
+
+ <script>
+         function imprimir () {
+        /*$('#impresion').printElement(
+        {
+            leaveOpen:false,
+            printMode:'popup'
+        });*/
+        var data = jQuery('#impresion').html();
+                var mywindow = window.open('', 'Rerporte de retraso mensual');
+                mywindow.document.write('<html><head><title>Reporte de retraso mensual</title>');
+                mywindow.document.write(' <link href="../css/impresion.css" rel="stylesheet" type="text/css" media="print"/>');
+                mywindow.document.write(data);
+                mywindow.document.write('</body></html>');
+                setTimeout(function(){
+                    mywindow.print();
+                    
+                    mywindow.close();
+                                
+                                
+                    location.reload();
+                }, 250);
+                
+    } 
+    </script>
+     
