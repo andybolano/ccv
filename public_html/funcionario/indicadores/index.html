@@ -1,0 +1,343 @@
+<div class="contenedor" style="zoom:85%" ng-controller="indicadoresController" data-ng-init="getMisProcesos();">
+    <div class="row z-depth-1 white"> 
+        <div class="contenedor">
+            <h2>Gestion de Indicadores</h2>
+            <div class="row">
+                <div class="col s6">
+                    <h5>Mis procesos<span class="new badge red ng-binding">{{numProcesos}}</span></h5>
+                    <div class="col s12"  ng-if="numProcesos == 0">
+                        <br>
+                        <center>No tiene procesos asignados</center>
+                    </div>
+                    <div class="col s12"  ng-if="numProcesos > 0">
+                        <br>
+                        <table class="bordered">
+                            <thead>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                sigla
+                            </th>
+                            <th>ver Indicadores</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in misProcesos">
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.sigla}}</td>
+                                    <td><a href="javascript:;" target="_blank" title="Visualizar" ng-click="modalIndicador(item)"><i class="material-icons">visibility</i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <h5>Mis subprocesos<span class="new badge red ng-binding">{{numSubProcesos}}</span></h5>
+                    <div class="col s12"  ng-if="numSubProcesos == 0">
+                        <br>
+                        <center>No tiene subprocesos asignados</center>
+                    </div>
+                    <div class="col s12"  ng-if="numSubProcesos > 0">
+                        <br>
+                        <table class="bordered">
+                            <thead>
+                            <th>
+                                Nombre
+                            </th>
+                            <th>
+                                sigla
+                            </th>
+                            <th>
+                                Proceso
+                            </th>
+                            <th>Ver Indicador</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in misSubProcesos">
+                                    <td>{{item.nombre}}</td>
+                                    <td>{{item.sigla}}</td>
+                                    <td>{{item.nombreProceso}}</td>
+                                    <td><a href="javascript:;" target="_blank" title="Visualizar" ng-click="modalIndicadorSubproceso(item)"><i class="material-icons">visibility</i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-fixed-footer" id="modalIndicadores" style="width: 100%;min-height: 90%;">
+        <div class="modal-content" style="padding:0">
+            <div class="col s12 teal darken-2" style="background-color:#c3c3c3;padding-top:0px">
+                <h2 style="color:#FFF;font-size:20px;padding:10px;">  Indicador(es) del proceso: <span id="nombreArchivo" style="font-weight:600;color:#FFF;">{{Proceso.nombre}}</span> </h2>
+            </div>
+            <div ng-if="Indicadores.estado == false">
+                <br><br>
+                <center> <h2>No existen Indicadores para este proceso</h2></center>
+            </div>
+            <div ng-if="Indicadores.estado != false">
+                <div class="row">
+                    <div class="col s3">
+                         <ul class="collapsible" data-collapsible="accordion">
+                            <li ng-repeat="item in Indicadores" onclick="acordion()" ng-click='cargarIndicador(item.i)'>
+                              <div class="collapsible-header"><i class="material-icons">show_chart</i>{{item.i.nombre}}</div>
+                              <div class="collapsible-body" style='padding:10px;'>
+                                <table class='bordered'>
+                            <tr>
+                                <td><span style='font-weight:900;'>Fuente:</span></td>
+                                <td>{{item.i.fuente}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Categoria:</span></td>
+                                <td>{{item.i.nombreCategoria}}</td>
+                            </tr>
+                                
+                            <tr>
+                                <td><span style='font-weight:900;'>Sub-categoria:</span></td>
+                                <td>{{item.i.nombreSubcategoria}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Proceso:</span></td>
+                                <td>{{item.i.nombreProceso}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Subproceso:</span></td>
+                                <td>{{item.i.nombreSubproceso}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Periodicidad:</span></td>
+                                <td ng-if="item.i.frecuencia == 1">Mensual</td>
+                                <td ng-if="item.i.frecuencia == 2">Bimensual</td>
+                                <td ng-if="item.i.frecuencia == 3">Trimestral</td>
+                                <td ng-if="item.i.frecuencia == 6">Semestral</td>
+                                <td ng-if="item.i.frecuencia == 12">Anual</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Unidad de medida:</span></td>
+                                <td>{{item.i.medidaNombre}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Meta:</span></td>
+                                <td>[{{item.i.limiteInferior}} , {{item.i.limiteSuperior}}]</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Sentido:</span></td>
+                                <td ng-if="item.i.sentido == '1'" style="text-align: left;color:#00c853" title="Positivo"><i class="material-icons">call_made</i> (+)</td>
+                                <td ng-if="item.i.sentido == '0'" style="text-align: left;color:#b71c1c;" title="Negativo"><i class="material-icons">call_received</i> (-)</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Formula:</span></td>
+                                <td ng-if="item.i.nombre_denominador == 'none'">{{item.i.nombre_numerador}}</td>
+                                <td ng-if="item.i.nombre_denominador != 'none'">{{item.i.nombre_numerador}} / {{item.i.nombre_denominador}} </td>
+                            </tr>
+
+                        </table>
+                              </div>
+                            </li>
+                          </ul>
+                    </div>
+                    <div class='col s9'>
+                        <div class="row z-depth-1 white" style='width: 100%;margin-top:10px;'> 
+                            <div class='contenedor'>
+                                <div ng-if='Indicador.nombre != null'>
+                                    <div class="row">
+                                        <div class="col s10">
+                                                <h2 style="color:#000;font-size:24px;font-weight:600">Indicador: {{Indicador.nombre}} </h2>
+                                        </div>
+                                        <div class="col s2">
+                                            <label>Año:</label>
+                                            <select class="browser-default" id="anio">
+                                                <option value="2016">
+                                                    2016
+                                                </option>
+                                                <option value="2015">
+                                                    2015
+                                                </option>
+                
+                                            </select>
+                                        </div>
+                                    </div>
+                                 <span style='font-weight:900;font-size:16px'>Formula:</span>
+                                <table style="width: 100px;" class="striped">
+                                    <tr>
+                                        <td style='font-weight:900;font-size:14px'>Numerador:</td>
+                                        <td>{{Indicador.nombre_numerador}}</td>
+                                    </tr>
+                  
+                                    <tr ng-if="Indicador.nombre_denominador != 'none'">
+                                        <td style='font-weight:900;font-size:14px'>Deminador:</td>
+                                        <td>{{Indicador.nombre_denominador}}</td>
+                                    </tr>
+                                </table>    
+                           
+                                 <table>
+                                     <thead>
+                                        <th ng-repeat="item in Meses">
+                                            {{item.mes}}
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td ng-repeat="item in Meses" style="padding-right:10px;">
+                                                <input type="number" name="numerador" id="numerador_{{item.id}}" title="{{Indicador.nombre_numerador}}" ng-blur="calcular(item.id)" placeholder="Numerador">
+                                            </td>
+                                        </tr>
+                                        <tr ng-if='Indicador.nombre_denominador != "none"'>
+                                           <td ng-repeat="item in Meses" style="padding-right:10px;">
+                                               <input type="number" name="denominador" id="denominador_{{item.id}}" title="{{Indicador.nombre_denominador}}" ng-blur="calcular(item.id)" placeholder="Denominador">
+                                            </td> 
+                                        </tr>
+                                        <tr>
+                                            <td ng-repeat="item in Meses" style="padding-right:10px;">
+                                                <input type="number" name="resultado" id="resultado_{{item.id}}"  placeholder="resultado" disabled style="font-weight:900;color:#999;border:3px solid #00796B;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                 </table>
+                                <br>
+                                <div style="text-align: right">
+                                   <button class="btn green" ng-click="guardar_resultados();">Guardar Resultado</button>
+                                </div>
+                                <br>
+                                </div>
+                                <div ng-if='Indicador.nombre == null'>
+                                    <br><br>
+                                    <center>
+                                        <h2>Seleccione un Indicador</h2>
+                                        <br><br>
+                                        <i class="material-icons" style='font-size:300px; color:#E9EAED;'>show_chart</i>
+                                    </center>
+                                   
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                      
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;"  class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+        </div>
+    </div>
+    
+    <div class="modal modal-fixed-footer" id="modalIndicadoresSubproceso" style="width: 100%;min-height: 90%;">
+        <div class="modal-content" style="padding:0">
+            <div class="col s12 red darken-3" style="background-color:#c3c3c3;padding-top:0px">
+                <h2 style="color:#FFF;font-size:20px;padding:10px;">  Indicador(es) del subproceso:  <span id="nombreArchivo" style="font-weight:600;color:#FFF;">{{Subproceso.nombre}}</span> </h2>
+            </div>
+            <div ng-if="Indicadores.estado == false">
+                <br><br>
+                <center> <h2>No existen Indicadores para este proceso</h2></center>
+            </div>
+            <div ng-if="Indicadores.estado != false">
+                <div class="row">
+                    <div class="col s3">
+                         <ul class="collapsible" data-collapsible="accordion">
+                            <li ng-repeat="item in Indicadores" onclick="acordion()" ng-click='cargarIndicador(item.i)'>
+                              <div class="collapsible-header"><i class="material-icons">show_chart</i>{{item.i.nombre}}</div>
+                              <div class="collapsible-body" style='padding:10px;'>
+                                <table class='bordered'>
+                            <tr>
+                                <td><span style='font-weight:900;'>Fuente:</span></td>
+                                <td>{{item.i.fuente}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Categoria:</span></td>
+                                <td>{{item.i.nombreCategoria}}</td>
+                            </tr>
+                                
+                            <tr>
+                                <td><span style='font-weight:900;'>Sub-categoria:</span></td>
+                                <td>{{item.i.nombreSubcategoria}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Proceso:</span></td>
+                                <td>{{item.i.nombreProceso}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Subproceso:</span></td>
+                                <td>{{item.i.nombreSubproceso}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Periodicidad:</span></td>
+                                <td ng-if="item.i.frecuencia == 1">Mensual</td>
+                                <td ng-if="item.i.frecuencia == 2">Bimensual</td>
+                                <td ng-if="item.i.frecuencia == 3">Trimestral</td>
+                                <td ng-if="item.i.frecuencia == 6">Semestral</td>
+                                <td ng-if="item.i.frecuencia == 12">Anual</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Unidad de medida:</span></td>
+                                <td>{{item.i.medidaNombre}}</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Meta:</span></td>
+                                <td>[{{item.i.limiteInferior}} , {{item.i.limiteSuperior}}]</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Sentido:</span></td>
+                                <td ng-if="item.i.sentido == '1'" style="text-align: left;color:#00c853" title="Positivo"><i class="material-icons">call_made</i> (+)</td>
+                                <td ng-if="item.i.sentido == '0'" style="text-align: left;color:#b71c1c;" title="Negativo"><i class="material-icons">call_received</i> (-)</td>
+                            </tr>
+                            <tr>
+                                <td><span style='font-weight:900;'>Formula:</span></td>
+                                <td ng-if="item.i.nombre_denominador == 'none'">{{item.i.nombre_numerador}}</td>
+                                <td ng-if="item.i.nombre_denominador != 'none'">{{item.i.nombre_numerador}} / {{item.i.nombre_denominador}} </td>
+                            </tr>
+
+                        </table>
+                              </div>
+                            </li>
+                          </ul>
+                    </div>
+                    <div class='col s9'>
+                        <div class="row z-depth-1 white" style='width: 100%;margin-top:10px;'> 
+                            <div class='contenedor'>
+                                <div ng-if='Indicador.nombre != null'>
+                                 <h2 style="color:#000;font-size:24px;font-weight:600">Indicador:{{Indicador.nombre}} </h2>
+    
+                                    
+                                </div>
+                                <!--Cuando no existen indicadores para el proceso-->
+                                <div ng-if='Indicador.nombre == null'>
+                                    <br><br>
+                                    <center>
+                                        <h2>Seleccione un Indicador</h2>
+                                        <br><br>
+                                        <i class="material-icons"style='font-size:300px; color:#E9EAED;'>show_chart</i>
+                                    </center>
+                                </div>
+                                <!---------------------------------------------------->
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                      
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:;"  class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+  
+        function acordion(){
+            $('.collapsible').collapsible({accordion : false});
+        }
+  
+
+   </script>

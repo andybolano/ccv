@@ -21,7 +21,7 @@
                  </div>   
                  <div class="row">
                      <div class="col s12">
-                        <table class="bordered striped">
+                        <table class="bordered striped ">
                             <thead> 
                             <tr>
  
@@ -37,27 +37,31 @@
                                 <th>Autorizacion Jefe de Area</th>
                                 <th>Autorizacion Camara</th>
                                 <th>Estado</th>
+                                <th>Ver</th>
                             </tr>
                             </thead>
                             <tbody style="height:100px;overflow-y: auto;">
                                 <tr ng-repeat="item in listaPermisos | filter: filtro" page-size="20" tolerance="100" >
                                     <td>
-                                   <img src="blob.php?id={{item.noDocumento}}" alt="Contact Person" class='profile'>
+                                   <img src="blob.php?id={{item.d.noDocumento}}" alt="Contact Person" class='profile'>
                                     </td>
-                                    <td>{{item.nombres}} {{item.apellidos}}</td>
-                                    <td>{{item.fechaSalida}}</td>
-                                    <td>{{item.horaSalida}}</td>
-                                    <td>{{item.fechaEntrada}}</td>
-                                    <td>{{item.horaEntrada}}</td>
-                                    <td>{{item.nombrePermiso}}</td>
-                                    <td>{{item.otroMotivo}}</td>
-                                    <td>{{item.remuneracion}}</td>
-                                    <td ng-if="item.vistoJefe =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
-                                     <td ng-if="item.vistoJefe =='2'"><i class="material-icons" style="color:#F44336;">pan_tool</i></td>
-                                    <td ng-if="item.vistoJefe =='0'"><i class="material-icons" style="color:#F44336;">clear</i></td>
-                                    <td ng-if="item.vistoAutoriza =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
-                                    <td ng-if="item.vistoAutoriza =='0'"><button class="waves-effect waves-light btn-improvised" ng-click="actualizarPermiso(item.id)"><i class="material-icons center"></i></button></td>
-                                    <td>{{item.estado}}</td>
+                                    <td>{{item.d.nombres}} {{item.d.apellidos}}</td>
+                                    <td>{{item.d.fechaSalida}}</td>
+                                    <td><span class="bage  blue darken-2">{{item.horaSalida}}</span></td>
+                                    <td>{{item.d.fechaEntrada}}</td>
+                                    <td><span class="bage  blue darken-2">{{item.horaLlegada}}</span></td>
+                                    <td>{{item.d.nombrePermiso}}</td>
+                                    <td><a href="javascript:;" ng-click="verMotivo(item.d.otroMotivo,item.d.noDocumento,item.d.nombres)"><i class="material-icons">comment</i></a>
+                                    <td>{{item.d.remuneracion}}</td>
+                                    <td ng-if="item.d.vistoJefe =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
+                                    <td ng-if="item.d.vistoJefe =='2'"><i class="material-icons" style="color:#F44336;">pan_tool</i></td>
+                                    <td ng-if="item.d.vistoJefe =='0'"><i class="material-icons" style="color:#F44336;">clear</i></td>
+                                    <td ng-if="item.d.vistoAutoriza =='1'"><i class="material-icons" style="color:#558B2F;">done</i></td>
+                                    <td ng-if="item.d.vistoAutoriza =='0'"><button class="waves-effect waves-light btn-improvised" ng-click="actualizarPermiso(item.d.id)"><i class="material-icons center"></i></button></td>
+                                    <td ng-if="item.d.estado == 'ESPERANDO'"><span class="bage  orange darken-2">{{item.d.estado}}</span></td>
+                                    <td ng-if="item.d.estado == 'AUTORIZADO'"><span class="bage  green darken-2">{{item.d.estado}}</span></td>
+                                    <td ng-if="item.d.estado == 'DENEGADO'"><span class="bage  red darken-2">{{item.d.estado}}</span></td>
+                                    <td><a href="javascript:;" ng-click="verHistoria(item.d,item.d.Empleados_id)"><i class="material-icons">visibility</i></a>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,6 +72,63 @@
                  </div>
              </div>
          </div>
+     
+     <div id="modalPermisosDetalles" class="modal modal-fixed-footer" style="width: 90%;min-height:85%;">
+        <div class="modal-content">
+
+                            <div class="row">
+                                <div class="col s12">
+                                    <center><h2>Historial de Permisos</h2></center>
+                                </div>
+                            </div>
+             <div class="col s3 left">
+                         <small>Funcionario</small></br>
+                           <div class="chip">
+                           <img src="blob.php?id={{funcionarioDetails.noDocumento}}" alt="Contact Person" class="profile"/>
+                           {{funcionarioDetails.nombres}}  {{funcionarioDetails.apellidos}}
+                          </div>
+                     </div>
+                                
+                            <table class="bordered striped ">
+                                <thead> 
+                                    <tr>
+                                        <th>fecha Salida</th>
+                                        <th>fecha Entrada</th>
+                                        <th>Tipo Permiso</th>
+                                        <th>Remuneracion</th>
+                                        <th>estado</th>   
+                                    </tr>
+                                </thead>
+                                <tbody style="height:100px;overflow-y: auto;">
+                                    <tr ng-repeat="item in Permisos | filter: filtro" page-size="20" tolerance="100" >
+
+
+                                        <td>{{item.fechaSalida}}</td>
+
+                                        <td>{{item.fechaEntrada}}</td>
+
+                                        <td>{{item.nombrePermiso}}</td>
+
+                                        <td>{{item.remuneracion}}</td>
+
+                                        <td>{{item.estado}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+            <br>
+                            <h2>Cantidad de Permisos: {{numPermisos}}</h2>
+                            <div id="loading_2" class="center" style="margin-top:100px;margin-bottom:100px;display:block"><img src="../images/loading.gif" width=60px"></div>
+                     
+               
+       
+             </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="modal-action modal-close waves-effect waves-light btn red " style="margin-left:10px;">Salir</a>
+            </div>
+       
+    </div>
+     
+     
      </div>
      
 

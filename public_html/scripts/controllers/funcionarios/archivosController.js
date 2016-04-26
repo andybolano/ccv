@@ -28,10 +28,7 @@ app.controller('archivosController', ['$scope','$rootScope', '$http', function($
              $scope.externo = {};
               $scope.listaArchivosExternos = {};
 //obtener fecha de hoy
-        cargarCargos_init();
-        getAllSubprocesos();
-        getAllprocesos();
-        getAlldocumentos();
+        
 //obtener fecha de hoy
 
     $scope.cargarManualProcesos = function (){
@@ -163,29 +160,7 @@ $scope.cargarManualCalidad = function (){
             });
     }
     
-        function getAllSubprocesos() {
-            $http.get('http://www.appccvalledupar.co/sgc/public/api/subprocesos').success(function(respuesta) {
-                localStorage.setItem("subprocesos", JSON.stringify(respuesta));
-            });
-        }
-
-        function getAllprocesos() {
-            $http.get('http://www.appccvalledupar.co/sgc/public/api/procesos').success(function(respuesta) {
-                localStorage.setItem("procesos", JSON.stringify(respuesta));
-            });
-        }
-
-        function getAlldocumentos() {
-            $http.get('http://localhost/sgc/public/api/documentos').success(function(respuesta) {
-                localStorage.setItem("documentos", JSON.stringify(respuesta));
-            });
-        }
-
-        function cargarCargos_init() {
-            $http.get('http://localhost/camaradecomercio/public/api/cargos').success(function(respuesta) {
-                localStorage.setItem("cargos", JSON.stringify(respuesta));
-            });
-        }
+       
 
         $scope.miCargo = function() {
             var usuario = JSON.parse(sessionStorage.getItem("session"));

@@ -51,6 +51,10 @@ var app;
                         templateUrl: 'solicitudesPermisos.html'
                     })
                     
+                      .when("/indicadores",{
+                        templateUrl: 'indicadores/index.html'
+                    })
+                    
                    
                     .when("/buzon",{
                         templateUrl: 'buzon.html'

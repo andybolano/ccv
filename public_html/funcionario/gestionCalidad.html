@@ -1,104 +1,140 @@
-<div  ng-controller="archivosController" class="contenedor" > 
+<div  ng-controller="archivosController" style="background-color:#FFF"> 
+<table border="1">    
+    <tr>
+        <td><img id="mapa" src="../images/mapa/mapa.png" border="0" width="978" height="600"  usemap="#Mapa" alt="" class="animated bounceIn"/></td>
+        <td width="10%">
+            <a href="#/gestionCalidad/manual">
+                <div  class="ball z-depth-1 animated " style=" background-color:#F44336;">
+                    <center>
+                        <p style='color:#FFF;font-size:11px;position:fixed;margin-top:20px;margin-left:21px;'>Manual<br> Calidad</p>
+                    </center>
+                </div>
+            </a>
+            <br>
+            <a href="#/gestionCalidad/manualProceso">
+                <div class="ball z-depth-1 animated " style="background-color:#FDD835;">
+                    <center>
+                        <p style='color:#FFF;font-size:11px;position:fixed;margin-top:25px;margin-left:6px;'>Manuales<br>Procedimiento</p>
+                    </center>
+                </div>
+            </a>
+            <br>
+            <a href="#/gestionCalidad/listadoInterno">
+                <div class="ball z-depth-1 animated " style="background-color:#4CAF50;">
+                    <center>
+                        <p style='color:#FFF;font-size:11px;position:fixed;margin-top:20px;margin-left:8px;'>List. Maestro<br>de Doc.<br>Internos</p>
+                    </center>
+                </div>
+            </a>
+            <br>
+            <a href="#/gestionCalidad/listadoExterno">
+                <div class="ball z-depth-1 animated " style="background-color:#2196F3;">
+                    <center>
+                        <p style='color:#FFF;font-size:11px;position:fixed;margin-top:20px;margin-left:8px;'>List. Maestro<br>de Doc.<br>Externos</p>
+                    </center>
+                </div>
+            </a>
+        </td>
+    <tr>
+</table>
+    
+    
+<map name="Mapa" id="mapa">
+<area shape="rect" coords="976,598,978,600" alt="Image Map" style="outline:none;" title="Mapa de procesos" href="http://www.image-maps.com/index.php?aff=mapped_users_0" />
+<area onMouseOut="volver();" onMouseOver="cambiar('PLA');" id="PLA" alt="Planeación Estratetegica" title="Planeación Estratetegica" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(1)' shape="poly" coords="438,313,466,283,353,171,325,201" style="outline:none; background-color:red" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('SEG');" id="SEG" alt="Seguimiento y mejora" title="Seguimiento y mejora"  href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(2)' shape="poly" coords="478,281,507,313,616,202,588,171" style="outline:none" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GEC');" id="GEC" alt="Gestión de Compras" title="Gestión de Compras"  href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(8)'  shape="poly" coords="233,278,276,289,284,263,296,239,311,216,319,207,285,178,254,220,240,251" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GCO');" id="GCO"  alt="Gestion de comunicaciones" title="Gestión de Comunicaciones" href="javascript:;" shape="poly" coords="623,207,659,179,688,221,703,252,712,289,715,299,670,301,658,258,642,230" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GTH');" id="GTH" alt="Gestión del talento Humano" title="Gestión del talento Humano" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(6)' shape="poly" coords="672,315,718,317,720,349,716,385,706,422,695,448,681,473,677,479,640,451,659,420,669,391,674,367,676,343" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GTI');" id="GTI" alt="Gestión Tecnológico de la Informacion" title="Gestión Tecnológico de la Informacion" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(5)' shape="poly" coords="632,463,671,491,645,518,624,537,595,557,565,571,528,583,518,584,515,540,546,529,576,516,601,498,620,480" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GFI');" id="GFI" alt="Gestión Financiera" title="Gestión Financiera" href="javascript:;" shape="poly" coords="306,530,342,498,364,513,384,526,411,534,424,539,427,585,423,585,384,575,353,561,334,548" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GDC');" id="GDC" alt="Gestión Documental" title="Gestión Documental" href="javascript:;" shape="poly" coords="297,520,332,493,331,486,314,471,303,455,295,444,287,428,283,418,242,440,250,460,264,483,282,501" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('GIN');" id="GIN" alt="Gestión de Infraestructura" title="Gestión de Infraestructura" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(7)' shape="poly" coords="236,427,279,408,274,388,270,371,268,349,268,331,271,316,273,306,271,297,228,287,223,318,221,350,226,388,233,410" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('REP');" id="REP" alt="Registros Publicos" title="Registros Publicos" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(3)' shape="poly" coords="454,352,456,370,605,370,607,352,464,351" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('CYA');" id="CYA" alt="Conciliación y Arbitraje" title="Conciliación y Arbitraje" href="javascript:;" shape="poly" coords="456,380,459,399,607,398,606,381,523,379" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('DES');" id="DES" alt="Desarrollo Regional" title="Desarrollo Regional" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(4)' shape="poly" coords="458,408,462,427,605,425,600,407,474,409" style="outline:none;" target="_self"     />
+<area onMouseOut="volver();" onMouseOver="cambiar('LYE');" id="LYE" alt="Logística y  Eventos" title="Logística y  Eventos" href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(4)' shape="poly" coords="457,433,460,456,601,456,600,435" style="outline:none;" target="_self"     />
+</map>
+</div>
 
-            <div class="contenedor">
-                <div class="row">
-                    <div id="mapa">
-                         <div style="width:40%;position: absolute;margin-left:5%;margin-top:0px;zoom:85%;">
-                <center>     
-                    <div class="title animated bounceIn">
-                        PROCESOS DE DIRECCIONAMIENTO
-                    </div>
-                </center>
+<script>
+    function volver(){
+       document.getElementById('mapa').src = "../images/mapa/mapa.png";  
+    }
+    function cambiar(id){
+         var audio = new Audio('../images/btn.mp3');
+        switch(id) {
+             case 'PLA':
+                 document.getElementById('mapa').src = "../images/mapa/mapa_PE.png";
+                 audio.play();
+                 break;
+             case 'SEG':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_SM.png";
+                  audio.play();
+                 break;
+                 case 'GEC':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GC.png";
+                  audio.play();
+                 break;
+                 case 'GCO':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GCO.png";
+                  audio.play();
+                 break;
+                 case 'GTH':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GT.png";
+                  audio.play();
+                 break;
+                  case 'GTI':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GIN.png";
+                  audio.play();
+                 break
+                 case 'GIN':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GI.png";
+                  audio.play();
+                 break
+                 case 'GDC':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GD.png";
+                  audio.play();
+                 break
+                 case 'GFI':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_GF.png";
+                  audio.play();
+                 break
+                 case 'REP':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_RP.png";
+                  audio.play();
+                 break
+                 case 'CYA':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_CA.png";
+                  audio.play();
+                 break
+                 case 'DES':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_DR.png";
+                  audio.play();
+                 break
+                 case 'LYE':
+                  document.getElementById('mapa').src = "../images/mapa/mapa_LE.png";
+                  audio.play();
+                 break
+         }
+         
+         
+    }
+    
+    
+var images = new Array();
 
-                <div style="margin-top: 22px;">
-                    <div class="line l1"></div>
-                     <div class="line l2"></div>
-<!--#/gestionCalidad/proceso-->
+function preload() {
+  for (i = 0; i < preload.arguments.length; i++) {
+    images[i] = new Image();
+    images[i].src = preload.arguments[i];
+  }
+}
+preload("../images/mapa/mapa_LE.png","../images/mapa/mapa_DR.png","../images/mapa/mapa_CA.png","../images/mapa/mapa_RP.png","../images/mapa/mapa_GF.png","../images/mapa/mapa_GD.png","../images/mapa/mapa_GI.png","../images/mapa/mapa_GIN.png","../images/mapa/mapa_GIN.png","../images/mapa/mapa_GT.png","../images/mapa/mapa_PE.png","../images/mapa/mapa_SM.png","../images/mapa/mapa_GC.png","../images/mapa/mapa_GCO.png");
 
-             <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(1)'><div class="circle_ izq animated bounceIn" >
-                        Planeaciòn estrategica del SGC
-                        </div>
-                     </a>
-                   <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(2)'> <div class="circle_ der animated bounceIn"><br>
-                        Seguimiento y mejora
-                    </div>
-                   </a>
-                </div>
-                
-                    <div class="line l3"></div>
-                    <div class="line l4"></div>
-                 
-                     <div style="margin-top: 160px;position: fixed;margin-left: 256px;" class="animated bounceIn">
-                        <p style="color:#000;font-weight: 900;margin-top:-30px;margin-left:60px;position:fixed">PROCESOS MISIONALES</p> 
-                        <div class="centro">
-                            <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(3)' style='color:#fff;'><p style="color:#000000;font-weight:900">REGISTROS PÚBLICOS</p>
-                                Mercantil - EsaDL<br> proponentes<br></a>
-                           <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(4)' style='color:#fff;'> <p style="color:#000000;font-weight:900">DESARROLLO EMPRESARIAL<br></p>
-                               Logistica y eventos<br>Capacitaciones de interes general<br></a>
-                        </div>
-                         
-                    </div>
-                 
-                    <div class="line l5"></div>
-                    <div class="line l6"></div>
-                    
-                   <div class="circle_2 izq_2 animated bounceIn" style="margin-left:0px;">
-                    <p style="margin-top:-50px;color:#c3c3c3;font-weight:900">Clientes</p><br><br>
-                    <span style="font-size: 14px;"> Necesidades y expectativas</span>
-                </div>
-                    
-                     
-                <div class="circle_2 der_2 animated bounceIn"  style="margin-right:0px;">
-                    <p style="margin-top:-50px;color:#c3c3c3;font-weight:900">Clientes</p><br><br>
-                    <span style="font-size: 17px;">Satisfacción</span>
-                </div>
-                    
-                    
-                      <div class="line l7"></div>
-                    <div class="line l8"></div>
-                    
-                     <div style="margin-top: 440px; font-weight: 900;position: fixed" class="animated bounceIn">
-                         <center style="margin-left:40px;">PROCESOS DE APOYO</center><br>
-                        <div class="footer">
-                            <table width="100%" style="text-align: center;">
-                                <tr>
-                                    <td style="text-align: center;">  <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(5)' style='color:#212121;'>Gestión Tecnológica<br>de la informacion</a></td>
-                                    <td style="text-align: center;">  <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(6)' style='color:#212121;'>Gestión del Talento <br>Humano</a></td>
-                                    <td style="text-align: center;">  <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(7)' style='color:#212121;'>Gestión del  <br>Infraestructura</a></td>
-                                    <td style="text-align: center;">  <a href='#/gestionCalidad/proceso' ng-click='direccionarProcesos(8)' style='color:#212121;'>Gestión del  <br>compras</a></td>
-                                </tr>    
-                            </table>
-                        </div>
-                    </div>
-        </div>
-                        <div style="margin-left:60%; width: 20%;position: absolute;">
-                            <div class="row white" style="height:100%;">
-                                <div class="col s12 z-depth-1">
-                                    <div class="contenedor">
-                                        <table>
-                                            <tr>
-                                                <td><i class="material-icons" style="color:#21418E">forward</i></td>
-                                                <td><a href="#/gestionCalidad/manual"> Manual de Calidad</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><i class="material-icons" style="color:#21418E">forward</i></td>
-                                                <td><a href="#/gestionCalidad/manualProceso"> Manuales de Procedimiento</a></td>
-                                            </tr>
-                                            <tr>   
-                                                <td><i class="material-icons" style="color:#21418E">forward</i></td>
-                                                <td><a href="#/gestionCalidad/listadoInterno"> Listado Maestro de Documentos Internos</a></td>
-                                            </tr>
-                                            <tr>
-                                            <td><i class="material-icons" style="color:#21418E">forward</i></td>
-                                            <td><a  href="#/gestionCalidad/listadoExterno"  > Listado Maestro de Documentos Externos</a></td>
-                                        </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-   
-</div> 
+
+
+ 
+
+    </script>
+          

@@ -34,7 +34,7 @@ var area = usuario[0].idArea;
                      localStorage.setItem("solicitudespermisos",JSON.stringify(lista));
                    $scope.SolicitudesPermisos =  JSON.parse(localStorage.getItem('solicitudespermisos'));
                     
-            
+          
                      
                   }
                   },

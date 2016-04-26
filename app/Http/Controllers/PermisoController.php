@@ -177,7 +177,7 @@ class PermisoController extends Controller
                             INNER JOIN empleados as e ON e.id = s.Empleados_id
                             INNER JOIN areas as a ON a.id =  e.Areas_id
                             INNER JOIN permisos as p ON p.id = s.TipoPermisos_id
-                            WHERE a.id = $area AND s.fechaEntrada <= '$fecha'
+                            WHERE a.id = $area 
                         " 
                     )); 
               return $result;

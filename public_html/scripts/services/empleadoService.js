@@ -56,6 +56,10 @@ app.service("empleadoService", function ($http) {
         var req = $http.post(uri+'/api/empleado/retrasoDia',object);
         return req;
     }
-
+    
+     this.getProcesos = function(empleado){
+        var req = $http.get(uri+'/api/empleado/procesos/'+empleado);
+        return req;
+    }
     
 });

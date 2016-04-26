@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'funcionarios'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,13 +52,24 @@ return [
             'prefix'   => '',
         ],
 
-        'mysql' => [
+        'funcionarios' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', '190.8.176.75'),
-            'database'  => env('DB_DATABASE', 'citcodaz_ccBD'),
-            'username'  => env('DB_USERNAME', 'citcodaz_root'),
-            'password'  => env('DB_PASSWORD', 'c4m4r4comercio'),
-            //'unix_socket'   => '/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock',
+            'host'      => env('FU_HOST', '107.180.21.19'),
+            'database'  => env('FU_DATABASE', 'timeit'),
+            'username'  => env('FU_USERNAME', 'timeit'),
+            'password'  => env('FU_PASSWORD', 'qaz123'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+        ],
+        
+         'sgc' => [
+            'driver'    => 'mysql',
+            'host'      => env('CA_HOST', 'localhost'),
+            'database'  => env('CA_DATABASE', 'forge'),
+            'username'  => env('CA_USERNAME', 'forge'),
+            'password'  => env('CA_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

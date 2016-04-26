@@ -10,17 +10,49 @@ use App\Http\Controllers\Controller;
 
 use DB;
 use App\Empleado;
+use App\Proceso;
+use App\Subproceso;
 
 class EmpleadoController extends Controller
 {
 
     
-     public function getNuevaEntrada($empleado){
-        
-         
-         return "Entrada Notificada".$empleado."";
-       
-               
+    
+    
+    
+    public function getProcesoByEmpleado($empleado){
+       try {
+          $procesos = Proceso::all();  
+          $subprocesos = Subproceso::all();  
+          $listaProcesos= array();
+          $listaSubprocesos= array();
+          foreach ($procesos as $p)
+            {
+                if($p->responsable == $empleado)
+                {
+                
+                   $listaProcesos[] = array( 
+                        'p' => $p
+                   ); 
+                   
+                }
+            }
+            foreach ($subprocesos as $s)
+            {
+           
+                if($s->responsable == $empleado)
+                {
+
+                   $listaSubprocesos[] = array( 
+                        'sp' => $s
+                   ); 
+                }
+            }
+                        return JsonResponse::create(array('procesos' => $listaProcesos, "subprocesos" => $listaSubprocesos), 200);
+           
+        } catch (Exception $exc) {
+            return JsonResponse::create(array('message' => "No puedo realizar la consulta", "exception"=>$exc->getMessage(), "request" =>json_encode($data)), 401);
+        }
     }
     
     public function getRetrasoDia(Request $request){
@@ -82,21 +114,16 @@ class EmpleadoController extends Controller
     }
     
      public function getPermisos($empleado){
-        
          $result = DB::select(DB::raw(
                         "Select p.* , permisos.nombre as nombrePermiso from solicitudpermisos as p 
                         INNER JOIN empleados ON empleados.id = p.Empleados_id  
                           INNER JOIN permisos ON permisos.id = p.tipoPermisos_id 
-                        WHERE empleados.id = $empleado"
+                        WHERE p.Empleados_id = $empleado"
                     ));
-         if(count($result)>0){
-                return $result;
-         }else{
-             return 0;
-         }
-           
-               
+             return $result;     
     }
+    
+    
     public function getByArea($area_id){
         
          $result = DB::select(DB::raw(

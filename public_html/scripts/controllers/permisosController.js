@@ -5,9 +5,10 @@ $scope.imagenFuncionario="http://localhost/camaradecomercio/public_html/images/1
 $scope.funcionario = [];
 $scope.Permisos = {};
 $scope.Permiso = {};
-$scope.listaPermisos = {};
+$scope.listaPermisos = [];
 $scope.motivos=[];
-
+$scope.permisos = {};
+$scope.funcionarioDetails = {};
 loadMotivos();
 loadPermisos();
 
@@ -43,10 +44,17 @@ function loadMotivos(){
 }  
   
 function loadPermisos(){
+   
+  $scope.listaPermisos.length = 0;
       var promiseGet = permisosService.listadoPermisos(); 
         promiseGet.then(function (pl) {
-           $scope.listaPermisos=pl.data;
-          
+            for(i=0; i<pl.data.length; i++){
+                horaLlegada = prepararHora(pl.data[i].horaEntrada);
+                horaSalida = prepararHora(pl.data[i].horaSalida);
+              
+                $scope.listaPermisos.push({"d":pl.data[i],"horaLlegada":horaLlegada,"horaSalida":horaSalida});
+            }
+      
         },
               function (errorPl) {
                   console.log('falla Cargando listado de Permisos', errorPl);
@@ -119,8 +127,8 @@ $scope.nuevo= function (){
 
             hora  = new Date($scope.Permiso.horaSalida);
      
-            h = (hora.getHours().toString().length)
-            m = (hora.getMinutes().toString().length)
+            h = (hora.getHours().toString().length);
+            m = (hora.getMinutes().toString().length);
 
           
 
@@ -150,7 +158,7 @@ $scope.nuevo= function (){
             vistoJefe:$scope.Permiso.vistoJefe,
             vistoAutoriza:$scope.Permiso.vistoAutoriza
         }; 
-      
+     
         var promiseGet = permisosService.post(object); 
         promiseGet.then(function (pl) {
            Materialize.toast(pl.data.message, "rounded","5000");
@@ -161,6 +169,38 @@ $scope.nuevo= function (){
         });
      
 }
+
+    $scope.verMotivo = function(motivo,id,nombre){
+        swal({   
+            title: "<small>Motivo del Permiso</small>!",   
+            text: '<img src="http://www.appccvalledupar.co/timeit/view/blob.php?id='+id+'" alt="Contact Person" width = "100px" height="100px" style = "border-radius:50%;"><br><br>'+nombre+"<br><br>"+motivo,   
+            html: true 
+        });
+    }
+    
+    $scope.verHistoria = function(datos,funcionario){
+        $scope.funcionarioDetails = datos;
+        console.log($scope.funcionarioDetails)
+        $('#modalPermisosDetalles').openModal();
+        $scope.getPermisos(funcionario);
+    }
+    
+    $scope.getPermisos = function(empleado){
+        $scope.numPermisos = 0;
+        $scope.Permisos="";
+     document.getElementById("loading_2").style.display="block";
+        var promiseGet = empleadoService.getPermisos(empleado);
+        promiseGet.then(function (pl) { 
+        document.getElementById("loading_2").style.display="none";
+        $scope.Permisos = pl.data;
+        console.log($scope.Permisos);
+       $scope.numPermisos = $scope.Permisos.length;
+        },
+              function (errorPl) {
+                  console.log('falla Cargando empleados', errorPl);
+                    document.getElementById("loading_2").style.display="none";
+              });
+    };
 
 });
 
